@@ -8,5 +8,4 @@
  * @author hugol
  */
 public class test {
-    yoho
 }
