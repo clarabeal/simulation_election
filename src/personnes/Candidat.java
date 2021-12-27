@@ -3,11 +3,13 @@ package personnes;
 public class Candidat extends Personne {
     private static int stidCandidat=0; // Ne se remettra jamais à 0 grâce au static
     private int idCandidat;
+    private int nbCandidat;
 
-    public Candidat(){
+    public Candidat(int n){
         super();
 
-        idCandidat=stidCandidat;
+        this.nbCandidat=n;
+        this.idCandidat=stidCandidat;
         stidCandidat++;
     }
 }
