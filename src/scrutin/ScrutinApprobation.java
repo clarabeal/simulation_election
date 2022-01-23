@@ -18,11 +18,11 @@ public class ScrutinApprobation extends Scrutin {
             for(int j=0;j<getNbCandidat();j++){
                 //On parcourt toutes les représentations
                 for(int r=0;r<2;r++){
-                    moy=moy+Math.abs(getCandidat(i).representation[r]-getElecteur(j).representation[r]);
+                    moy=moy+Math.abs(getCandidat(i).getRepresentation(r)-getElecteur(j).getRepresentation(r));
                 }
                 moy=moy/2;
                 if(moy<getSeuil()){
-                    getElecteur(i).tabVote[iVote]=getCandidat(j).getIdCandidat();
+                    getElecteur(i).setVote(iVote,getCandidat(j).getIdCandidat());
                     iVote++;
                 }
             }

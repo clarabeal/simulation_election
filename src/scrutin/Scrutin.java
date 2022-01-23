@@ -27,22 +27,6 @@ public abstract class Scrutin {
         }
     }
 
-    //Affiche les candidats avec leur representation et leur id 
-    public void affTabCandidat(){
-        for(int i=0;i<this.nbCandidat;i++){
-            System.out.println("Représentation : ["+this.tabCandidat[i].representation[0]+","+this.tabCandidat[i].representation[1]+"]");
-            System.out.println("Id : Candidat "+this.tabCandidat[i].getIdCandidat());
-        }
-    }
-
-    //Affiche les électeurs avec leur représentation et leur id (manque tabVote car au début il est vide)
-    public void affTabElecteur(){
-        for(int i=0;i<this.nbElecteur;i++){
-            System.out.println("Représentation : ["+this.tabElecteur[i].representation[0]+","+this.tabElecteur[i].representation[1]+"]");
-            System.out.println("Id : Electeur "+this.tabElecteur[i].getIdElecteur());
-        }
-    }
-
     //Fonction qui retourne nbElecteur
     public int getNbELecteur(){
         return this.nbElecteur;
@@ -66,6 +50,22 @@ public abstract class Scrutin {
     //Fonction qui retourne l'Electeur présent à l'indice i de tabElecteur
     public Electeur getElecteur(int i){
         return this.tabElecteur[i];
+    }
+
+    //Affiche les candidats avec leur representation et leur id 
+    public void affTabCandidat(){
+        for(int i=0;i<this.nbCandidat;i++){
+            System.out.println("Représentation : ["+this.tabCandidat[i].getRepresentation(0)+","+this.tabCandidat[i].getRepresentation(1)+"]");
+            System.out.println("Id : Candidat "+this.tabCandidat[i].getIdCandidat());
+        }
+    }
+
+    //Affiche les électeurs avec leur représentation et leur id (manque tabVote car au début il est vide)
+    public void affTabElecteur(){
+        for(int i=0;i<this.nbElecteur;i++){
+            System.out.println("Représentation : ["+this.tabElecteur[i].getRepresentation(0)+","+this.tabElecteur[i].getRepresentation(1)+"]");
+            System.out.println("Id : Electeur "+this.tabElecteur[i].getIdElecteur());
+        }
     }
 
     public abstract void voter();
