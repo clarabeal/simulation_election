@@ -34,7 +34,10 @@ public class Main {
         s.affTabElecteur();
         s.voter();
 
-        s.getElecteur(0).affTabVote();;
-        s.getElecteur(1).affTabVote();;
+        System.out.println("Electeur 1 :");
+        s.getElecteur(0).affTabVote();
+
+        System.out.println("Electeur 2 :");
+        s.getElecteur(1).affTabVote();
     }
 }

@@ -29,10 +29,9 @@ public class Electeur extends Personne{
     //Affiche le tableau des votes
     public void affTabVote(){
         for(int i=0;i<this.nbCandidat;i++){
-            //if(this.tabVote[i]!=0){ //On affiche seulement les cases remplies
-              //  System.out.println(this.tabVote[i]);
-            //}
-            System.out.println(this.tabVote[i]);
+            if(this.tabVote[i]!=0){ //On affiche seulement les cases remplies
+              System.out.println(this.tabVote[i]+" ");
+            }
         }
     }
 }

@@ -10,10 +10,10 @@ public class ScrutinApprobation extends Scrutin {
     //Procédure qui permet de remplir tabVote de chaque électeur
     public void voter(){
         double moy=0;
-        int iVote=0;
 
         //On parcourt tabElecteur
         for(int i=0;i<getNbELecteur();i++){
+            int iVote=0;
             //On parcourt tabCandidat pour chaque électeur
             for(int j=0;j<getNbCandidat();j++){
                 //On parcourt toutes les représentations
