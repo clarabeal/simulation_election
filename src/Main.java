@@ -28,7 +28,7 @@ public class Main {
         System.out.println(e.tabVote[1]);
         */
 
-        Scrutin s = new Scrutin(2,2);
+        ScrutinApprobation s = new ScrutinApprobation(2,2);
 
         s.affTabCandidat();
         s.affTabElecteur();

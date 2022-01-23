@@ -2,7 +2,7 @@ package scrutin;
 
 import personnes.*;
 
-public class Scrutin { //Remettre abstract pour méthode voter
+public abstract class Scrutin { //Remettre abstract car normalement peut pas etre instancié
     private Electeur tabElecteur[];
     private Candidat tabCandidat[];
     private int nbElecteur;
@@ -29,7 +29,7 @@ public class Scrutin { //Remettre abstract pour méthode voter
     public void affTabCandidat(){
         for(int i=0;i<this.nbCandidat;i++){
             System.out.println("Représentation : ["+this.tabCandidat[i].representation[0]+","+this.tabCandidat[i].representation[1]+"]");
-            System.out.println("Id : "+this.tabCandidat[i].idCandidat);
+            System.out.println("Id : Candidat "+this.tabCandidat[i].idCandidat);
         }
     }
 
@@ -37,8 +37,10 @@ public class Scrutin { //Remettre abstract pour méthode voter
     public void affTabElecteur(){
         for(int i=0;i<this.nbElecteur;i++){
             System.out.println("Représentation : ["+this.tabElecteur[i].representation[0]+","+this.tabElecteur[i].representation[1]+"]");
-            System.out.println("Id : "+this.tabElecteur[i].idElecteur);
+            System.out.println("Id : Electeur "+this.tabElecteur[i].idElecteur);
         }
     }
+
+    public abstract void voter();
 }
 
