@@ -18,7 +18,7 @@ public class ScrutinApprobation extends Scrutin {
             for(int j=0;j<getNbCandidat();j++){
                 //On parcourt toutes les représentations
                 for(int r=0;r<2;r++){
-                    moy=moy+abs(getCandidat(i).representation[r]-getElecteur(j).representation[r]);
+                    moy=moy+Math.abs(getCandidat(i).representation[r]-getElecteur(j).representation[r]);
                 }
                 moy=moy/2;
                 if(moy<getSeuil()){

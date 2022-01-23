@@ -48,6 +48,11 @@ public abstract class Scrutin {
         return this.nbElecteur;
     }
 
+    //Fonction qui retourne nbCandidat
+    public int getNbCandidat(){
+        return this.nbCandidat;
+    }
+
     //Fonction qui retourne le seuil
     public double getSeuil(){
         return this.seuil;
