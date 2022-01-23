@@ -32,5 +32,9 @@ public class Main {
 
         s.affTabCandidat();
         s.affTabElecteur();
+        s.voter();
+
+        s.getElecteur(0).affTabVote();;
+        s.getElecteur(1).affTabVote();;
     }
 }
