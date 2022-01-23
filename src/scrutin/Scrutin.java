@@ -2,7 +2,7 @@ package scrutin;
 
 import personnes.*;
 
-public abstract class Scrutin { //Remettre abstract car normalement peut pas etre instancié
+public abstract class Scrutin {
     private Electeur tabElecteur[];
     private Candidat tabCandidat[];
     private int nbElecteur;
