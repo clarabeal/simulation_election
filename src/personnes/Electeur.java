@@ -40,7 +40,7 @@ public class Electeur extends Personne{
     public void affTabVote(){
         for(int i=0;i<this.nbCandidat;i++){
             if(this.tabVote[i]!=0){ //On affiche seulement les cases remplies
-              System.out.println(this.tabVote[i]);
+              System.out.print(this.tabVote[i]+" ");
             }
         }
     }

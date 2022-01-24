@@ -28,7 +28,7 @@ public abstract class Scrutin {
     }
 
     //Fonction qui retourne nbElecteur
-    public int getNbELecteur(){
+    public int getNbElecteur(){
         return this.nbElecteur;
     }
 
@@ -55,19 +55,49 @@ public abstract class Scrutin {
     //Affiche les candidats avec leur representation et leur id 
     public void affTabCandidat(){
         for(int i=0;i<this.nbCandidat;i++){
-            System.out.println("Représentation : ["+this.tabCandidat[i].getRepresentation(0)+","+this.tabCandidat[i].getRepresentation(1)+"]");
             System.out.println("Id : Candidat "+this.tabCandidat[i].getIdCandidat());
+            System.out.println("Représentation : ["+this.tabCandidat[i].getRepresentation(0)+","+this.tabCandidat[i].getRepresentation(1)+"]");
         }
     }
 
-    //Affiche les électeurs avec leur représentation et leur id (manque tabVote car au début il est vide)
+    //Affiche les électeurs avec leur représentation, leur id et leurs votes
     public void affTabElecteur(){
         for(int i=0;i<this.nbElecteur;i++){
-            System.out.println("Représentation : ["+this.tabElecteur[i].getRepresentation(0)+","+this.tabElecteur[i].getRepresentation(1)+"]");
             System.out.println("Id : Electeur "+this.tabElecteur[i].getIdElecteur());
+            System.out.println("Représentation : ["+this.tabElecteur[i].getRepresentation(0)+","+this.tabElecteur[i].getRepresentation(1)+"]");
+            System.out.print("Vote : [ ");
+            this.tabElecteur[i].affTabVote();
+            System.out.println("]");
         }
     }
 
+    //Procédure qui permet de remplir tabVote de chaque électeur
     public abstract void voter();
+
+    //Fonction qui retourne un tab contenant le nombre de voix pour chaque Candidat(indice 0 => candidat 1, indice 1 => candidat 2 ...)
+    public int[] nbVoix(){
+
+        int tabVoix[] = new int[this.nbCandidat];
+        for(int i=0;i<this.nbCandidat;i++){
+            tabVoix[i]=0;
+        }
+
+        for(int i=0;i<this.nbElecteur;i++){
+            //On parcourt tabVote de tous les électeurs
+            for(int j=0;j<this.nbCandidat;j++){
+
+                if((getElecteur(i).getVote(j)!=-1)&&(getElecteur(i).getVote(j)!=0)){ //On enlève le cas de l'abstention et le cas où il n'y a pas de vote
+                    tabVoix[getElecteur(i).getVote(j)-1]=tabVoix[getElecteur(i).getVote(j)-1]+1; //-1 car id commence à 1
+                }
+                
+            }
+        }
+        return tabVoix;
+    }
+
+    //Fonction qui retourne un tab des gagnants de l'élection dans l'ordre
+    //public int[] resultat(){
+
+    //}
 }
 

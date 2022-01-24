@@ -28,16 +28,20 @@ public class Main {
         System.out.println(e.tabVote[1]);
         */
 
-        ScrutinApprobation s = new ScrutinApprobation(2,2);
+        int nbCandidat = 5;
+        int nbElecteur = 5;
 
+        ScrutinApprobation s = new ScrutinApprobation(nbElecteur,nbCandidat);
+
+        s.voter();
         s.affTabCandidat();
         s.affTabElecteur();
-        s.voter();
 
-        System.out.println("Electeur 1 :");
-        s.getElecteur(0).affTabVote();
+        int tabVoix[] = new int [nbCandidat];
+        tabVoix=s.nbVoix();
 
-        System.out.println("Electeur 2 :");
-        s.getElecteur(1).affTabVote();
+        for(int i=0;i<nbCandidat;i++){
+            System.out.println(tabVoix[i]);
+        }
     }
 }
