@@ -14,7 +14,7 @@ public class Candidat extends Personne {
         this.stidCandidat++;
 
         Random ran = new Random();
-        this.age=ran.nextInt((99-18)+1)+18;
+        this.age=ran.nextInt((70-18)+1)+18;
     }
 
     //Retourne l'identifiant du candidat

@@ -42,6 +42,7 @@ public class Main {
         int tabVoix[] = new int [nbCandidat];
         tabVoix=s.getNbVoix();
 
+        System.out.print("nbVoix : ");
         for(int i=0;i<nbCandidat;i++){
             System.out.print(tabVoix[i]+" ");
         }
@@ -50,6 +51,7 @@ public class Main {
         int tabRang[] = new int[nbCandidat];
         tabRang=s.getRangIndice();
 
+        System.out.print("Rang : ");
         for(int i=0;i<nbCandidat;i++){
             System.out.print(tabRang[i]+" ");
         }
@@ -58,6 +60,7 @@ public class Main {
         int tabResult[] = new int[nbCandidat];
         tabResult=s.getResultat();
 
+        System.out.print("Résultats : ");
         for(int i=0;i<nbCandidat;i++){
             System.out.print(tabResult[i]+" ");
         }

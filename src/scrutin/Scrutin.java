@@ -119,18 +119,36 @@ public abstract class Scrutin {
         int tabRang[]=new int[this.nbCandidat];
         tabRang=getRangIndice();
 
+        //On modifie tabRang pour enlever les égalités possibles
+        changeEgalite(tabRang);
+
         int tabResult[]=new int[this.nbCandidat];
 
-        for(int i=0;i<this.nbCandidat;i++){
+        for(int i=1;i<this.nbCandidat+1;i++){
             for(int j=0;j<this.nbCandidat;j++){
                 if(tabRang[j]==i){
-                    System.out.println("Candidat "+(j+1)+"est "+i);
-                    tabResult[i]=j+1;
+                    System.out.println("Candidat "+(j+1)+" est "+i);
+                    tabResult[i-1]=j+1;
                 }
             }
         }
-
         return tabResult;
+    }
+
+    //Modifie tabRang en enlevant les égalités en regardant l'âge
+    public void changeEgalite(int[] tabRang){
+        for(int i=0;i<this.nbCandidat;i++){
+            for(int j=0;j<this.nbCandidat;j++){
+                if((i!=j)&&(tabRang[i]==tabRang[j])){ //On regarde que ça ne soit pas le même indice et qu'on ait la même valeur
+                    if(getCandidat(i).getAgeCandidat()>getCandidat(j).getAgeCandidat()){
+                        tabRang[j]++;
+                    }
+                    else{
+                        tabRang[i]++;
+                    }
+                }
+            }
+        }
     }
 }
 
