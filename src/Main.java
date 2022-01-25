@@ -29,18 +29,18 @@ public class Main {
         */
 
         int nbCandidat = 5;
-        int nbElecteur = 5;
+        int nbElecteur = 100;
 
         //Vote par approbation
+        /*
+        ScrutinApprobation s1 = new ScrutinApprobation(nbElecteur,nbCandidat);
 
-        ScrutinApprobation s = new ScrutinApprobation(nbElecteur,nbCandidat);
+        s1.voter();
+        s1.affTabCandidat();
+        s1.affTabElecteur();
 
-        s.voter();
-        s.affTabCandidat();
-        s.affTabElecteur();
-
-        int tabVoix[] = new int [nbCandidat];
-        tabVoix=s.getNbVoix();
+        int tabVoix[] = new int[nbCandidat];
+        tabVoix=s1.getNbVoix();
 
         System.out.print("nbVoix : ");
         for(int i=0;i<nbCandidat;i++){
@@ -49,7 +49,7 @@ public class Main {
         System.out.println("");
 
         int tabRang[] = new int[nbCandidat];
-        tabRang=s.getRangIndice();
+        tabRang=s1.getRangIndice();
 
         System.out.print("Rang : ");
         for(int i=0;i<nbCandidat;i++){
@@ -58,11 +58,46 @@ public class Main {
         System.out.println("");
 
         int tabResult[] = new int[nbCandidat];
-        tabResult=s.getResultat();
+        tabResult=s1.getResultat();
 
         System.out.print("Résultats : ");
         for(int i=0;i<nbCandidat;i++){
             System.out.print(tabResult[i]+" ");
         }
+        */
+
+        //Scrutin majoritaire à un tour        
+        ScrutinMajoritaireUnTour s2 = new ScrutinMajoritaireUnTour(nbElecteur,nbCandidat);
+
+        s2.voter();
+        s2.affTabCandidat();
+        s2.affTabElecteur();
+
+        int tabVoix2[] = new int[nbCandidat];
+        tabVoix2=s2.getNbVoix();
+
+        System.out.print("nbVoix : ");
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabVoix2[i]+" ");
+        }
+        System.out.println("");
+
+        int tabRang2[] = new int[nbCandidat];
+        tabRang2=s2.getRangIndice();
+
+        System.out.print("Rang : ");
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabRang2[i]+" ");
+        }
+        System.out.println("");
+
+        int tabResult2[] = new int[nbCandidat];
+        tabResult2=s2.getResultat();
+
+        System.out.print("Résultats : ");
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabResult2[i]+" ");
+        }
+        
     }
 }

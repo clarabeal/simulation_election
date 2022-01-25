@@ -20,7 +20,7 @@ public class ScrutinApprobation extends Scrutin {
                 for(int r=0;r<2;r++){ 
                     moy=moy+Math.abs(getCandidat(j).getRepresentation(r)-getElecteur(i).getRepresentation(r));
                 }
-
+                
                 moy=moy/2;
 
                 if(moy<getSeuil()){
