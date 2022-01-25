@@ -56,6 +56,7 @@ public abstract class Scrutin {
     public void affTabCandidat(){
         for(int i=0;i<this.nbCandidat;i++){
             System.out.println("Id : Candidat "+this.tabCandidat[i].getIdCandidat());
+            System.out.println("Age : "+this.tabCandidat[i].getAgeCandidat()+" ans");
             System.out.println("Représentation : ["+this.tabCandidat[i].getRepresentation(0)+","+this.tabCandidat[i].getRepresentation(1)+"]");
         }
     }
@@ -75,7 +76,7 @@ public abstract class Scrutin {
     public abstract void voter();
 
     //Fonction qui retourne un tab contenant le nombre de voix pour chaque Candidat(indice 0 => candidat 1, indice 1 => candidat 2 ...)
-    public int[] nbVoix(){
+    public int[] getNbVoix(){
 
         int tabVoix[] = new int[this.nbCandidat];
         for(int i=0;i<this.nbCandidat;i++){
@@ -89,15 +90,47 @@ public abstract class Scrutin {
                 if((getElecteur(i).getVote(j)!=-1)&&(getElecteur(i).getVote(j)!=0)){ //On enlève le cas de l'abstention et le cas où il n'y a pas de vote
                     tabVoix[getElecteur(i).getVote(j)-1]=tabVoix[getElecteur(i).getVote(j)-1]+1; //-1 car id commence à 1
                 }
-                
             }
         }
         return tabVoix;
     }
 
-    //Fonction qui retourne un tab des gagnants de l'élection dans l'ordre
-    //public int[] resultat(){
+    //Fonction qui retourne un tab du rang des indices de tabVoix
+    public int[] getRangIndice(){
+        int tabVoix[]=new int[this.nbCandidat];
+        tabVoix=getNbVoix();
 
-    //}
+        int tabRang[]=new int[this.nbCandidat];
+
+        for(int i=0;i<this.nbCandidat;i++){
+            int compt = 0;
+            for(int j=0;j<this.nbCandidat;j++){
+                if(tabVoix[j]>tabVoix[i]){
+                    compt++;
+                }
+            }
+            tabRang[i]=compt+1;
+        }
+        return tabRang;
+    }
+
+    //Fonction qui retourne un tab 
+    public int[] getResultat(){
+        int tabRang[]=new int[this.nbCandidat];
+        tabRang=getRangIndice();
+
+        int tabResult[]=new int[this.nbCandidat];
+
+        for(int i=0;i<this.nbCandidat;i++){
+            for(int j=0;j<this.nbCandidat;j++){
+                if(tabRang[j]==i){
+                    System.out.println("Candidat "+(j+1)+"est "+i);
+                    tabResult[i]=j+1;
+                }
+            }
+        }
+
+        return tabResult;
+    }
 }
 

@@ -31,6 +31,8 @@ public class Main {
         int nbCandidat = 5;
         int nbElecteur = 5;
 
+        //Vote par approbation
+
         ScrutinApprobation s = new ScrutinApprobation(nbElecteur,nbCandidat);
 
         s.voter();
@@ -38,10 +40,26 @@ public class Main {
         s.affTabElecteur();
 
         int tabVoix[] = new int [nbCandidat];
-        tabVoix=s.nbVoix();
+        tabVoix=s.getNbVoix();
 
         for(int i=0;i<nbCandidat;i++){
-            System.out.println(tabVoix[i]);
+            System.out.print(tabVoix[i]+" ");
+        }
+        System.out.println("");
+
+        int tabRang[] = new int[nbCandidat];
+        tabRang=s.getRangIndice();
+
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabRang[i]+" ");
+        }
+        System.out.println("");
+
+        int tabResult[] = new int[nbCandidat];
+        tabResult=s.getResultat();
+
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabResult[i]+" ");
         }
     }
 }
