@@ -29,7 +29,7 @@ public class Main {
         */
 
         int nbCandidat = 5;
-        int nbElecteur = 100;
+        int nbElecteur = 5;
 
         //Vote par approbation
         /*
@@ -66,7 +66,9 @@ public class Main {
         }
         */
 
-        //Scrutin majoritaire à un tour        
+        //Scrutin majoritaire à un tour  
+              
+        /*
         ScrutinMajoritaireUnTour s2 = new ScrutinMajoritaireUnTour(nbElecteur,nbCandidat);
 
         s2.voter();
@@ -98,6 +100,46 @@ public class Main {
         for(int i=0;i<nbCandidat;i++){
             System.out.print(tabResult2[i]+" ");
         }
+        */
+
+        //Scrutin majoritaire à deux tours        
+
+        ScrutinMajoritaireDeuxTours s4 = new ScrutinMajoritaireDeuxTours(nbElecteur, nbCandidat);
+
+        //1er tour
+        s4.voter();
+        s4.affTabCandidat();
+        s4.affTabElecteur();
+
+        int tabResult4[] = new int[nbCandidat];
+        tabResult4=s4.getResultat();
+
+        System.out.print("Résultats : ");
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabResult4[i]+" ");
+        }
+
+        //2nd tour
+        s4.modifTabCandidat(tabResult4);
+
+        s4.voter();
+        s4.affTabCandidat();
+        s4.affTabElecteur();
+
+        int tabResult5[] = new int[nbCandidat];
+        tabResult5=s4.getResultat();
+
+        System.out.print("Résultats : ");
+        for(int i=0;i<2;i++){
+            System.out.print(tabResult5[i]+" ");
+        }
+        
+        //Scrutin Borda
+
+        /*
+        ScrutinBorda s3 = new ScrutinBorda(nbElecteur, nbCandidat);
+        s3.voter();
+        */
         
     }
 }

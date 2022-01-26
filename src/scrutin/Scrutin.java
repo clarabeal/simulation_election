@@ -114,7 +114,7 @@ public abstract class Scrutin {
         return tabRang;
     }
 
-    //Fonction qui retourne un tab 
+    //Fonction qui retourne un tab des résultats du scrutin
     public int[] getResultat(){
         int tabRang[]=new int[this.nbCandidat];
         tabRang=getRangIndice();
@@ -149,6 +149,21 @@ public abstract class Scrutin {
                 }
             }
         }
+    }
+
+    //Supprime le tabCandidat
+    public void deleteTabCandidat(){
+        for(int i=0;i<getNbCandidat();i++)
+        {
+            this.tabCandidat[i]=null;
+        }
+    }
+
+    //Créé un nouveau tabCandidat   
+    public void setNewTabCandidat(Candidat[] newTabCandidat){
+        this.nbCandidat = 2;
+        this.tabCandidat[0]=newTabCandidat[0];
+        this.tabCandidat[1]=newTabCandidat[1];
     }
 }
 
