@@ -1,6 +1,4 @@
 package scrutin;
-import java.util.Map; 
-import java.util.HashMap;
 
 public class ScrutinBorda extends Scrutin{
 
@@ -15,7 +13,11 @@ public class ScrutinBorda extends Scrutin{
         //On parcourt tabElecteur
         for(int i=0;i<getNbElecteur();i++){
             //Tab qui contiendra la moy de l'électeur avec les candidats
-            Map<Integer,Double> map= new HashMap<>();
+            double[] tabMoy = new double [getNbCandidat()];
+
+            //On créé un tab qui va renseigner le rang des moyennes
+            int tabRang[]=new int[getNbCandidat()];
+
             //On parcourt tabCandidat pour chaque électeur
             for(int j=0;j<getNbCandidat();j++){
                 double moy=0;
@@ -24,11 +26,36 @@ public class ScrutinBorda extends Scrutin{
                     moy=moy+Math.abs(getCandidat(j).getRepresentation(r)-getElecteur(i).getRepresentation(r));
                 }
                 moy=moy/2;
-                map.put(getCandidat(j).getIdCandidat(),moy);
-
-                //On trie 
+                tabMoy[j]=moy; 
             }
-            System.out.println(map);
+
+            //On remplit tabRang
+            for(int n=0;n<getNbCandidat();n++){
+                int compt = 0;
+                for(int m=0;m<getNbCandidat();m++){
+                    if(tabMoy[m]<tabMoy[n]){
+                        compt++;
+                    }
+                }
+                tabRang[n]=compt+1;
+            }
+
+            //On remplit tabVote de chaque Electeur
+            int points = getNbCandidat();
+
+            for(int p=0;p<getNbCandidat();p++){
+                getElecteur(i).setVote(p,points-tabRang[p]+1);
+            }
+
+            //Affichage test 
+            for(int l=0;l<getNbCandidat();l++){
+                System.out.println(tabMoy[l]);
+            }
+            System.out.println(" ");
+            for(int l=0;l<getNbCandidat();l++){
+                System.out.println(tabRang[l]);
+            }
+            System.out.println(" ");
         }
     }
 }

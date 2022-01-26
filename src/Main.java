@@ -104,6 +104,7 @@ public class Main {
 
         //Scrutin majoritaire à deux tours        
 
+        /*
         ScrutinMajoritaireDeuxTours s4 = new ScrutinMajoritaireDeuxTours(nbElecteur, nbCandidat);
 
         //1er tour
@@ -133,13 +134,24 @@ public class Main {
         for(int i=0;i<2;i++){
             System.out.print(tabResult5[i]+" ");
         }
+        */
         
         //Scrutin Borda
 
-        /*
         ScrutinBorda s3 = new ScrutinBorda(nbElecteur, nbCandidat);
         s3.voter();
-        */
+        s3.affTabCandidat();
+        s3.affTabElecteur();
+
+        int tabVoix3[] = new int[nbCandidat];
+        tabVoix3=s3.getNbVoix();
+
+        System.out.print("nbVoix : ");
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabVoix3[i]+" ");
+        }
+        
+        
         
     }
 }
