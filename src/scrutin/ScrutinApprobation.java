@@ -9,7 +9,9 @@ public class ScrutinApprobation extends Scrutin {
     /**
     * @Override
     */
-    public void voter(){
+    //Remplit tabVote de chaque Electeur avec les identifiants des Candidats pour lequel il souhaite voter et retourne le nb d'abstention
+    public int voter(){
+        int nbAbstention=0;
         //On parcourt tabElecteur
         for(int i=0;i<getNbElecteur();i++){
             int iVote=0;
@@ -37,10 +39,12 @@ public class ScrutinApprobation extends Scrutin {
                 }
             }
 
-            // S'il n'y a pas de vote, il y a abstention donc -1
+            //S'il n'y a pas de vote, il y a abstention donc -1
             if(vide){
                 getElecteur(i).setVote(0,-1);
+                nbAbstention++;
             }
         }
+        return nbAbstention;
     }
 }

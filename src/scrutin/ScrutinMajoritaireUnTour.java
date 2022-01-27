@@ -9,7 +9,9 @@ public class ScrutinMajoritaireUnTour extends Scrutin{
     /**
     * @Override
     */
-    public void voter(){
+    //Remplit tabVote de chaque Electeur avec l'identifiant du Candidat pour lequel il souhaite voter et retourne le nb d'abstention
+    public int voter(){
+        int nbAbstention=0;
         //On parcourt tabElecteur
         for(int i=0;i<this.getNbElecteur();i++){
             int iCandidat=-1;
@@ -34,7 +36,9 @@ public class ScrutinMajoritaireUnTour extends Scrutin{
             }
             else{ //Abstention
                 getElecteur(i).setVote(0,-1);
+                nbAbstention++;
             } 
         }
+        return nbAbstention;
     }
 }

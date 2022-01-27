@@ -9,7 +9,8 @@ public class ScrutinBorda extends Scrutin{
     /**
     * @Override
     */
-    public void voter(){
+    //Remplit tabVote de chaque Electeur en attribuant n points pour le 1er Candidat, n-1 pour le 2ème... et retourne le nb d'abstention
+    public int voter(){
         //On parcourt tabElecteur
         for(int i=0;i<getNbElecteur();i++){
             //Tab qui contiendra la moy de l'électeur avec les candidats
@@ -46,17 +47,9 @@ public class ScrutinBorda extends Scrutin{
             for(int p=0;p<getNbCandidat();p++){
                 getElecteur(i).setVote(p,points-tabRang[p]+1);
             }
-
-            //Affichage test 
-            for(int l=0;l<getNbCandidat();l++){
-                System.out.println(tabMoy[l]);
-            }
-            System.out.println(" ");
-            for(int l=0;l<getNbCandidat();l++){
-                System.out.println(tabRang[l]);
-            }
-            System.out.println(" ");
         }
+
+        return 0;
     }
 
     //Redéfinition

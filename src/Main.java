@@ -30,14 +30,19 @@ public class Main {
 
         int nbCandidat = 5;
         int nbElecteur = 5;
+        int nbAbstention = 0;
 
         //Vote par approbation
+        
         /*
         ScrutinApprobation s1 = new ScrutinApprobation(nbElecteur,nbCandidat);
 
-        s1.voter();
+        nbAbstention=s1.voter();
         s1.affTabCandidat();
         s1.affTabElecteur();
+
+        System.out.print("Abstention : ");
+        System.out.println(nbAbstention);
 
         int tabVoix[] = new int[nbCandidat];
         tabVoix=s1.getNbVoix();
@@ -71,9 +76,12 @@ public class Main {
         /*
         ScrutinMajoritaireUnTour s2 = new ScrutinMajoritaireUnTour(nbElecteur,nbCandidat);
 
-        s2.voter();
+        nbAbstention=s2.voter();
         s2.affTabCandidat();
         s2.affTabElecteur();
+
+        System.out.print("Abstention : ");
+        System.out.println(nbAbstention);
 
         int tabVoix2[] = new int[nbCandidat];
         tabVoix2=s2.getNbVoix();
@@ -104,13 +112,16 @@ public class Main {
 
         //Scrutin majoritaire à deux tours        
 
-        /*
+        
         ScrutinMajoritaireDeuxTours s4 = new ScrutinMajoritaireDeuxTours(nbElecteur, nbCandidat);
 
         //1er tour
-        s4.voter();
+        nbAbstention=s4.voter();
         s4.affTabCandidat();
         s4.affTabElecteur();
+
+        System.out.print("Abstention : ");
+        System.out.println(nbAbstention);
 
         int tabResult4[] = new int[nbCandidat];
         tabResult4=s4.getResultat();
@@ -123,9 +134,12 @@ public class Main {
         //2nd tour
         s4.modifTabCandidat(tabResult4);
 
-        s4.voter();
+        nbAbstention=s4.voter();
         s4.affTabCandidat();
         s4.affTabElecteur();
+
+        System.out.print("Abstention : ");
+        System.out.println(nbAbstention);
 
         int tabResult5[] = new int[nbCandidat];
         tabResult5=s4.getResultat();
@@ -134,10 +148,11 @@ public class Main {
         for(int i=0;i<2;i++){
             System.out.print(tabResult5[i]+" ");
         }
-        */
+        
         
         //Scrutin Borda
 
+        /*
         ScrutinBorda s3 = new ScrutinBorda(nbElecteur, nbCandidat);
         s3.voter();
         s3.affTabCandidat();
@@ -168,5 +183,6 @@ public class Main {
         for(int i=0;i<nbCandidat;i++){
             System.out.print(tabResult3[i]+" ");
         }
+        */
     }
 }

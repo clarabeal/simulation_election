@@ -52,29 +52,6 @@ public abstract class Scrutin {
         return this.tabElecteur[i];
     }
 
-    //Affiche les candidats avec leur representation et leur id 
-    public void affTabCandidat(){
-        for(int i=0;i<this.nbCandidat;i++){
-            System.out.println("Id : Candidat "+this.tabCandidat[i].getIdCandidat());
-            System.out.println("Age : "+this.tabCandidat[i].getAgeCandidat()+" ans");
-            System.out.println("Représentation : ["+this.tabCandidat[i].getRepresentation(0)+","+this.tabCandidat[i].getRepresentation(1)+"]");
-        }
-    }
-
-    //Affiche les électeurs avec leur représentation, leur id et leurs votes
-    public void affTabElecteur(){
-        for(int i=0;i<this.nbElecteur;i++){
-            System.out.println("Id : Electeur "+this.tabElecteur[i].getIdElecteur());
-            System.out.println("Représentation : ["+this.tabElecteur[i].getRepresentation(0)+","+this.tabElecteur[i].getRepresentation(1)+"]");
-            System.out.print("Vote : [ ");
-            this.tabElecteur[i].affTabVote();
-            System.out.println("]");
-        }
-    }
-
-    //Procédure qui permet de remplir tabVote de chaque électeur
-    public abstract void voter();
-
     //Fonction qui retourne un tab contenant le nombre de voix pour chaque Candidat(indice 0 => candidat 1, indice 1 => candidat 2 ...)
     public int[] getNbVoix(){
 
@@ -135,6 +112,36 @@ public abstract class Scrutin {
         return tabResult;
     }
 
+    //Créé un nouveau tabCandidat   
+    public void setNewTabCandidat(Candidat[] newTabCandidat){
+        this.nbCandidat = 2;
+        this.tabCandidat[0]=newTabCandidat[0];
+        this.tabCandidat[1]=newTabCandidat[1];
+    }
+
+    //Affiche les candidats avec leur representation et leur id 
+    public void affTabCandidat(){
+        for(int i=0;i<this.nbCandidat;i++){
+            System.out.println("Id : Candidat "+this.tabCandidat[i].getIdCandidat());
+            System.out.println("Age : "+this.tabCandidat[i].getAgeCandidat()+" ans");
+            System.out.println("Représentation : ["+this.tabCandidat[i].getRepresentation(0)+","+this.tabCandidat[i].getRepresentation(1)+"]");
+        }
+    }
+
+    //Affiche les électeurs avec leur représentation, leur id et leurs votes
+    public void affTabElecteur(){
+        for(int i=0;i<this.nbElecteur;i++){
+            System.out.println("Id : Electeur "+this.tabElecteur[i].getIdElecteur());
+            System.out.println("Représentation : ["+this.tabElecteur[i].getRepresentation(0)+","+this.tabElecteur[i].getRepresentation(1)+"]");
+            System.out.print("Vote : [ ");
+            this.tabElecteur[i].affTabVote();
+            System.out.println("]");
+        }
+    }
+
+    //Procédure qui permet de remplir tabVote de chaque électeur et de retourner le nb d'abstention
+    public abstract int voter();
+
     //Modifie tabRang en enlevant les égalités en regardant l'âge
     public void changeEgalite(int[] tabRang){
         for(int i=0;i<this.nbCandidat;i++){
@@ -159,11 +166,5 @@ public abstract class Scrutin {
         }
     }
 
-    //Créé un nouveau tabCandidat   
-    public void setNewTabCandidat(Candidat[] newTabCandidat){
-        this.nbCandidat = 2;
-        this.tabCandidat[0]=newTabCandidat[0];
-        this.tabCandidat[1]=newTabCandidat[1];
-    }
 }
 
