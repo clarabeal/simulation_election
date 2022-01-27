@@ -150,8 +150,23 @@ public class Main {
         for(int i=0;i<nbCandidat;i++){
             System.out.print(tabVoix3[i]+" ");
         }
-        
-        
-        
+        System.out.println(" ");
+
+        int tabRang3[] = new int[nbCandidat];
+        tabRang3=s3.getRangIndice();
+
+        System.out.print("Rang : ");
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabRang3[i]+" ");
+        }
+        System.out.println("");
+
+        int tabResult3[] = new int[nbCandidat];
+        tabResult3=s3.getResultat();
+
+        System.out.print("Résultats : ");
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabResult3[i]+" ");
+        }
     }
 }

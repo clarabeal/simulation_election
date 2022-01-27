@@ -58,4 +58,22 @@ public class ScrutinBorda extends Scrutin{
             System.out.println(" ");
         }
     }
+
+    //Redéfinition
+    //Fonction qui retourne un tab contenant le nombre de voix pour chaque Candidat(indice 0 => candidat 1, indice 1 => candidat 2 ...)
+    public int[] getNbVoix(){
+
+        int tabVoix[] = new int[getNbCandidat()];
+        for(int i=0;i<getNbCandidat();i++){
+            tabVoix[i]=0;
+        }
+
+        for(int i=0;i<this.getNbElecteur();i++){
+            //On parcourt tabVote de tous les électeurs
+            for(int j=0;j<this.getNbCandidat();j++){
+                tabVoix[j]=tabVoix[j]+getElecteur(i).getVote(j); //-1 car id commence à 1
+            }
+        }
+        return tabVoix;
+    }
 }
