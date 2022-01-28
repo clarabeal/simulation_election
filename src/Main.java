@@ -29,7 +29,7 @@ public class Main {
         */
 
         int nbCandidat = 5;
-        int nbElecteur = 5;
+        int nbElecteur = 20;
         int nbAbstention = 0;
 
         //Vote par approbation
@@ -112,7 +112,7 @@ public class Main {
 
         //Scrutin majoritaire à deux tours        
 
-        
+        /*
         ScrutinMajoritaireDeuxTours s4 = new ScrutinMajoritaireDeuxTours(nbElecteur, nbCandidat);
 
         //1er tour
@@ -148,7 +148,7 @@ public class Main {
         for(int i=0;i<2;i++){
             System.out.print(tabResult5[i]+" ");
         }
-        
+        */
         
         //Scrutin Borda
 
@@ -184,5 +184,14 @@ public class Main {
             System.out.print(tabResult3[i]+" ");
         }
         */
+        
+        //Vote alternatif
+
+        ScrutinAlternatif s5 = new ScrutinAlternatif(nbElecteur, nbCandidat);
+        s5.voter();
+        s5.affTabCandidat();
+        s5.affTabElecteur();
+        s5.voterElimine();
+        
     }
 }
