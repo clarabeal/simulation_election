@@ -2,8 +2,15 @@ package scrutin;
 
 public class ScrutinAlternatif extends Scrutin {
 
+    private int tabRang[];
+
     public ScrutinAlternatif(int nbE, int nbC){
         super(nbE,nbC);
+    
+        this.tabRang = new int[getNbCandidat()];
+        for(int i=0;i<getNbCandidat();i++){
+			tabRang[i]=0;
+        }
     }
 
     /**
@@ -91,10 +98,16 @@ public class ScrutinAlternatif extends Scrutin {
     //Fonction qui remplit tabVote de chaque Electeur en prenant en compte le Candidat éliminé
     public int voterElimine(){
 
+        int compt=getNbCandidat();
+
         for(int k=0;k<getNbCandidat()-1;k++){
             //On récupère l'indice du Candidat éliminé
             int idElimine = getIdElimine();
             System.out.println("L'éliminé : "+idElimine);
+
+            //On remplit tabRang
+            this.tabRang[idElimine]=compt;
+            compt--;
 
             for(int i=0;i<getNbElecteur();i++){
                 
@@ -118,6 +131,13 @@ public class ScrutinAlternatif extends Scrutin {
         int tabVoix[] = new int[getNbCandidat()];
         tabVoix=getNbVoix();
 
+        //On cherche l'indice du gagnant pour remplir la dernière case de tabRang
+        for(int i=0;i<getNbCandidat();i++){
+            if(tabVoix[i]!=0){
+                this.tabRang[i]=compt;
+            }
+        }
+
         //Affichage tabVoix
         System.out.print("nbVoix : ");
         for(int i=0;i<getNbCandidat();i++){
@@ -126,5 +146,11 @@ public class ScrutinAlternatif extends Scrutin {
         System.out.println(" ");
         
         return 0;
+    }
+
+    //Redéfinition
+    //Fonction qui retourne un tab des résultats du scrutin
+    public int[] getRangIndice(){
+        return this.tabRang;
     }
 }

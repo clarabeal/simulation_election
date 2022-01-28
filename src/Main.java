@@ -29,7 +29,7 @@ public class Main {
         */
 
         int nbCandidat = 5;
-        int nbElecteur = 20;
+        int nbElecteur = 5;
         int nbAbstention = 0;
 
         //Vote par approbation
@@ -192,6 +192,22 @@ public class Main {
         s5.affTabCandidat();
         s5.affTabElecteur();
         s5.voterElimine();
-        
+
+        int tabRang5[]= new int [nbCandidat];
+        tabRang5=s5.getRangIndice();
+
+        System.out.print("Rang : ");
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabRang5[i]+" ");
+        }
+        System.out.println("");
+
+        int tabResult5[] = new int[nbCandidat];
+        tabResult5=s5.getResultat();
+
+        System.out.print("Résultats : ");
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabResult5[i]+" ");
+        }
     }
 }
