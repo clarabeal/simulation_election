@@ -35,10 +35,9 @@ public class Main {
 
         //Vote par approbation
         
-        
+        /*
         ScrutinApprobation s1 = new ScrutinApprobation(nbElecteur,nbCandidat);
 
-        /*
         s1.affTabCandidat();
         s1.affTabElecteur();
 
@@ -77,11 +76,6 @@ public class Main {
             System.out.print(tabResult[i]+" ");
         }
         */
-
-        s1.affTabElecteur();
-        s1.modifTabElecteurSondage();
-        s1.affTabElecteur();
-        
 
         //Scrutin majoritaire à un tour  
               

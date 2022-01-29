@@ -9,11 +9,13 @@ public abstract class Scrutin {
     private Candidat tabCandidat[];
     private Electeur tabElecteurSauvegarde[];
     private int nbElecteur;
+    private int nbElecteurSauvegarde;
     private int nbCandidat;
     private double seuil;
 
     public Scrutin (int nbE, int nbC){
         this.nbElecteur=nbE;
+        this.nbElecteurSauvegarde=nbE;
         this.nbCandidat=nbC;
         this.seuil=0.3;
 
@@ -115,6 +117,15 @@ public abstract class Scrutin {
             }
         }
         return tabResult;
+    }
+
+    //Récupère l'ancien tabElecteur à l'aide de tabElecteurSauvegarde
+    public void getAncienTabElecteur(){
+        this.nbElecteur=this.nbElecteurSauvegarde;
+
+        for(int i=0;i<this.nbElecteur;i++){
+            this.tabElecteur[i]=tabElecteurSauvegarde[i];
+        }
     }
 
     //Créé un nouveau tabCandidat   
