@@ -7,6 +7,7 @@ import personnes.*;
 public abstract class Scrutin {
     private Electeur tabElecteur[];
     private Candidat tabCandidat[];
+    private Electeur tabElecteurSauvegarde[];
     private int nbElecteur;
     private int nbCandidat;
     private double seuil;
@@ -17,9 +18,11 @@ public abstract class Scrutin {
         this.seuil=0.3;
 
         this.tabElecteur = new Electeur[this.nbElecteur];
+        this.tabElecteurSauvegarde = new Electeur[this.nbElecteur];
         for(int i=0;i<this.nbElecteur;i++){
 			Electeur e = new Electeur(this.nbCandidat);
-			this.tabElecteur[i]=e;
+            this.tabElecteur[i]=e;
+            this.tabElecteurSauvegarde[i]=e;
 		}
 
         this.tabCandidat = new Candidat[this.nbCandidat];
@@ -121,6 +124,15 @@ public abstract class Scrutin {
         this.tabCandidat[1]=newTabCandidat[1];
     }
 
+    //Créé un nouveau tabElecteur   
+    public void setNewTabElecteur(Electeur[] tabElecteurSondage, int nbE){
+        this.nbElecteur = nbE;
+
+        for(int i=0;i<this.nbElecteur;i++){
+            this.tabElecteur[i]=tabElecteurSondage[i];
+        }
+    }
+
     //Modifie le seuil
     public void setSeuil(double seuil){
         this.seuil=seuil;
@@ -170,6 +182,14 @@ public abstract class Scrutin {
         for(int i=0;i<getNbCandidat();i++)
         {
             this.tabCandidat[i]=null;
+        }
+    }
+
+    //Supprime le tabElecteur
+    public void deleteTabElecteur(){
+        for(int i=0;i<getNbElecteur();i++)
+        {
+            this.tabElecteur[i]=null;
         }
     }
 
@@ -300,6 +320,48 @@ public abstract class Scrutin {
                 }
             }
         }
+    }
+
+    //Modifie le tabElecteur pour le sondage
+    public void modifTabElecteurSondage(){
+        int nbE =(int)Math.round(nbElecteur*0.1);
+        System.out.println("Personnes qui participent au sondage : "+nbE);
+
+        int[] tabIdElecteur = new int[nbE]; //Ce tableau va contenir les id des Electeurs du sondage
+        for(int i=0;i<nbE;i++){
+            tabIdElecteur[i]=0;
+        }
+
+        Electeur[] tabElecteurSondage = new Electeur[nbE];
+        Random ran = new Random();
+
+        //On remplit tabElecteurSondage
+        for(int i=0;i<nbE;i++){
+            boolean disponible=false;
+            int idE=-1;
+            //On choisit un électeur parmis tous les électeurs et on vérifie qu'il n'a pas déjà été choisi
+            while(!disponible){
+                System.out.println("On rentre");
+                disponible=true;
+                idE = ran.nextInt(getNbElecteur())+1; //de 1 à nbElecteur
+                System.out.println("idE : "+idE);
+
+                for(int j=0;j<nbE;j++){
+                    if(tabIdElecteur[j]==idE){
+                        disponible=false;
+                    }
+                }
+
+                System.out.println("Disponible : "+disponible);
+            }
+
+            //On remplit les tab
+            tabIdElecteur[i]=idE;
+            tabElecteurSondage[i]=getElecteur(idE-1); //-1 à cause du décalage dans tabElecteur
+        }
+
+        deleteTabElecteur();
+        setNewTabElecteur(tabElecteurSondage,nbE);
     }
 }
 
