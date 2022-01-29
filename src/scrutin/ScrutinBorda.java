@@ -69,4 +69,32 @@ public class ScrutinBorda extends Scrutin{
         }
         return tabVoix;
     }
+
+    public void ToString(){
+        int tabVoix[] = new int[getNbCandidat()];
+        tabVoix=getNbVoix();
+
+        System.out.print("nbVoix : ");
+        for(int i=0;i<getNbCandidat();i++){
+            System.out.print(tabVoix[i]+" ");
+        }
+        System.out.println(" ");
+
+        int tabRang[] = new int[getNbCandidat()];
+        tabRang=getRangIndice();
+
+        System.out.print("Rang : ");
+        for(int i=0;i<getNbCandidat();i++){
+            System.out.print(tabRang[i]+" ");
+        }
+        System.out.println("");
+
+        int tabResult[] = new int[getNbCandidat()];
+        tabResult=getResultat();
+
+        System.out.print("Résultats : ");
+        for(int i=0;i<getNbCandidat();i++){
+            System.out.print(tabResult[i]+" ");
+        }
+    }
 }

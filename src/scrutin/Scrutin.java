@@ -119,6 +119,11 @@ public abstract class Scrutin {
         this.tabCandidat[1]=newTabCandidat[1];
     }
 
+    //Modifie le seuil
+    public void setSeuil(double seuil){
+        this.seuil=seuil;
+    }
+
     //Affiche les candidats avec leur representation et leur id 
     public void affTabCandidat(){
         for(int i=0;i<this.nbCandidat;i++){

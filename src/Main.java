@@ -1,5 +1,6 @@
 import personnes.*;
 import scrutin.*;
+//import affichage.*;
 
 public class Main {
     public static void main(String [] args){
@@ -112,6 +113,7 @@ public class Main {
 
         //Scrutin majoritaire à deux tours        
 
+        /*
         ScrutinMajoritaireDeuxTours s4 = new ScrutinMajoritaireDeuxTours(nbElecteur, nbCandidat);
 
         //1er tour
@@ -156,7 +158,7 @@ public class Main {
         for(int i=0;i<2;i++){
             System.out.print(tabResult5[i]+" ");
         }
-        
+        */
         
         //Scrutin Borda
 
