@@ -1,6 +1,7 @@
 package scrutin;
 
 import java.util.Arrays;
+import java.util.Random;
 import personnes.*;
 
 public abstract class Scrutin {
@@ -177,5 +178,128 @@ public abstract class Scrutin {
         return (getNbElecteur() == (int) getNbElecteur()) && (getNbCandidat() == (int) getNbCandidat()) && (getNbElecteur() >= 0) && (getNbCandidat() >= 0);
     }
 
+    //Génère les interactions socio-politiques qui vont venir modifier tabVote de chaqeu électeur
+    public void interactions(){
+        //On parcourt tabElecteur
+        for(int i=0;i<this.nbElecteur;i++){
+            System.out.println("Electeur a modifier : Electeur "+getElecteur(i).getIdElecteur());
+
+            //On cherche si il tombe sur un autre électeur ou un candidat
+            Random ran = new Random();
+            int choix = ran.nextInt(2);
+
+            if(choix==0){//Choisir un autre électeur
+                int idElecteur;
+                do{
+                    idElecteur=ran.nextInt(getNbElecteur())+1; //de 1 à nbElecteur
+                    System.out.println("Electeur "+idElecteur);
+                }while(idElecteur==i+1);
+
+                //On modifie les représentations
+                double moy=0;
+                for(int j=0;j<2;j++){
+                    moy=moy+Math.abs(getElecteur(i).getRepresentation(j)-getElecteur(idElecteur-1).getRepresentation(j));
+                }
+
+                moy=moy/2;
+                System.out.println("Moyenne : "+moy);
+
+                if(moy<getSeuil()){//On les rapproche
+                    System.out.println("On les rapproche");
+                    for(int j=0;j<2;j++){
+                        double dist=getElecteur(i).getRepresentation(j)-getElecteur(idElecteur-1).getRepresentation(j);
+                        System.out.println("Distance : "+dist);
+
+                        //On va venir rapprocher les représentations de l'électeur avec celles de l'autre électeur
+                        if(Math.abs(dist)>0.1&&dist<0){
+                            System.out.println("Cas 1, +");
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.1);
+                        }
+                        else if(Math.abs(dist)>0.1&&dist>0){
+                            System.out.println("Cas 2, -");
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.1);
+                        }
+                        else{//La valeur absolue de la distance est <0,1 donc on copie la valeur de l'autre électeur
+                            System.out.println("Cas 3, copie");
+                            getElecteur(i).setRepresentation(j, getElecteur(idElecteur-1).getRepresentation(j));
+                        }
+                    }
+                }
+                else{//On les éloigne
+                    System.out.println("On les éloigne");
+                    for(int j=0;j<2;j++){
+                        double dist=getElecteur(i).getRepresentation(j)-getElecteur(idElecteur-1).getRepresentation(j);
+                        System.out.println("Distance : "+dist);
+
+                        //On va venir éloigner les représentations de l'électeur avec celles de l'autre électeur
+                        if((dist<0) && (getElecteur(i).getRepresentation(j)-0.1>=0)){
+                            System.out.println("Cas 1, -");
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.1);
+                        }
+                        else if((dist>0) && (getElecteur(i).getRepresentation(j)+0.1<=1)){
+                            System.out.println("Cas 2, +");
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.1);
+                        }
+                        //Si la nouvelle valeur allait être supérieure à 1 ou inférieure à 0 on ne change rien
+                    }
+                }
+            }
+            else{//choix==1, choisir un candidat
+                int idCandidat=ran.nextInt(getNbCandidat())+1; //de 1 à nbCandidat
+                System.out.println("Candidat "+idCandidat);
+
+                //On modifie les représentations
+                double moy=0;
+                for(int j=0;j<2;j++){
+                    moy=moy+Math.abs(getElecteur(i).getRepresentation(j)-getCandidat(idCandidat-1).getRepresentation(j));
+                }
+
+                moy=moy/2;
+
+                System.out.println("Moyenne : "+moy);
+
+                if(moy<getSeuil()){//On les rapproche
+                    System.out.println("On les rapproche");
+                    for(int j=0;j<2;j++){
+                        double dist=getElecteur(i).getRepresentation(j)-getCandidat(idCandidat-1).getRepresentation(j);
+                        System.out.println("Distance : "+dist);
+
+                        //On va venir rapprocher les représentations de l'électeur avec celles du candidat
+                        if(Math.abs(dist)>0.1&&dist<0){
+                            System.out.println("Cas 1, +");
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.1);
+                        }
+                        else if(Math.abs(dist)>0.1&&dist>0){
+                            System.out.println("Cas 2, -");
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.1);
+                        }
+                        else{//La valeur absolue de la distance est <0,1 donc on copie la valeur du candidat
+                            System.out.println("Cas 3, copie");
+                            getElecteur(i).setRepresentation(j, getCandidat(idCandidat-1).getRepresentation(j));
+                        }
+                    }
+
+                }
+                else{//On les éloigne
+                    System.out.println("On les éloigne");
+                    for(int j=0;j<2;j++){
+                        double dist=getElecteur(i).getRepresentation(j)-getCandidat(idCandidat-1).getRepresentation(j);
+                        System.out.println("Distance : "+dist);
+
+                        //On va venir éloigner les représentations de l'électeur avec celles du candidat
+                        if((dist<0) && (getElecteur(i).getRepresentation(j)-0.1>=0)){
+                            System.out.println("Cas 1, -");
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.1);
+                        }
+                        else if((dist>0) && (getElecteur(i).getRepresentation(j)+0.1<=1)){
+                            System.out.println("Cas 2, +");
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.1);
+                        }
+                        //Si la nouvelle valeur allait être supérieure à 1 ou inférieure à 0 on ne change rien
+                    }
+                }
+            }
+        }
+    }
 }
 

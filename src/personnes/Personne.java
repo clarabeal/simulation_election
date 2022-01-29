@@ -16,5 +16,10 @@ public class Personne {
     public double getRepresentation(int i){
         return this.representation[i];
     }
+
+    //Modifie l'axe d'indice i
+    public void setRepresentation(int i,double val){
+        this.representation[i]=val;
+    }
 }
 

@@ -35,8 +35,13 @@ public class Main {
 
         //Vote par approbation
         
-        /*
+        
         ScrutinApprobation s1 = new ScrutinApprobation(nbElecteur,nbCandidat);
+
+        s1.affTabCandidat();
+        s1.affTabElecteur();
+
+        s1.interactions();
 
         nbAbstention=s1.voter();
         s1.affTabCandidat();
@@ -70,7 +75,7 @@ public class Main {
         for(int i=0;i<nbCandidat;i++){
             System.out.print(tabResult[i]+" ");
         }
-        */
+        
 
         //Scrutin majoritaire à un tour  
               
