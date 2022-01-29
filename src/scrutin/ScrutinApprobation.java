@@ -1,5 +1,8 @@
 package scrutin;
 
+import java.io.FileWriter;
+import java.util.ArrayList;
+
 public class ScrutinApprobation extends Scrutin {
 
     public ScrutinApprobation(int nbE, int nbC){

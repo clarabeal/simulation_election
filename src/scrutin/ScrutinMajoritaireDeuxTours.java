@@ -1,5 +1,7 @@
 package scrutin;
 
+import java.io.FileWriter;
+import java.util.ArrayList;
 import personnes.*;
 
 public class ScrutinMajoritaireDeuxTours extends ScrutinMajoritaireUnTour{

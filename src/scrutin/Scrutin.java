@@ -1,5 +1,6 @@
 package scrutin;
 
+import java.util.Arrays;
 import personnes.*;
 
 public abstract class Scrutin {

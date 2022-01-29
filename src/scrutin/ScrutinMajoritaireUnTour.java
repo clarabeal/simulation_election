@@ -1,5 +1,8 @@
 package scrutin;
 
+import java.io.FileWriter;
+import java.util.ArrayList;
+
 public class ScrutinMajoritaireUnTour extends Scrutin{
 
     public ScrutinMajoritaireUnTour(int nbE, int nbC){
