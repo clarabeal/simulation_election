@@ -220,11 +220,12 @@ public abstract class Scrutin {
 
             if(choix==0){//Choisir un autre électeur
                 int idElecteur;
+                //On cherche un électeur différent de celui qui est selectionné
                 do{
                     idElecteur=ran.nextInt(getNbElecteur())+1; //de 1 à nbElecteur
                 }while(idElecteur==i+1);
 
-                //On modifie les représentations
+                //On calcule la différences entre les représentations
                 double moy=0;
                 for(int j=0;j<2;j++){
                     moy=moy+Math.abs(getElecteur(i).getRepresentation(j)-getElecteur(idElecteur-1).getRepresentation(j));
@@ -232,7 +233,8 @@ public abstract class Scrutin {
 
                 moy=moy/2;
 
-                if(moy<getSeuil()){//On les rapproche
+                //On modifie les représentations
+                if(moy<getSeuil()){//On les rapproche si la moyenne est inférieure au seuil
                     for(int j=0;j<2;j++){
                         double dist=getElecteur(i).getRepresentation(j)-getElecteur(idElecteur-1).getRepresentation(j);
 
@@ -243,12 +245,12 @@ public abstract class Scrutin {
                         else if(Math.abs(dist)>0.1&&dist>0){
                             getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.1);
                         }
-                        else{//La valeur absolue de la distance est <0,1 donc on copie la valeur de l'autre électeur
+                        else{//Si la valeur absolue de la distance est <0,1 alors on copie la valeur de l'autre électeur
                             getElecteur(i).setRepresentation(j, getElecteur(idElecteur-1).getRepresentation(j));
                         }
                     }
                 }
-                else{//On les éloigne
+                else{//On les éloigne si la moyenne est supérieure au seuil
                     for(int j=0;j<2;j++){
                         double dist=getElecteur(i).getRepresentation(j)-getElecteur(idElecteur-1).getRepresentation(j);
 
@@ -311,7 +313,7 @@ public abstract class Scrutin {
 
     //Modifie le tabElecteur pour le sondage
     public void modifTabElecteurSondage(){
-        int nbE =(int)Math.round(nbElecteur*0.1);
+        int nbE =(int)Math.round(nbElecteur*0.1); //Nombre d'électeurs dans le sondage
 
         int[] tabIdElecteur = new int[nbE]; //Ce tableau va contenir les id des Electeurs du sondage
         for(int i=0;i<nbE;i++){
@@ -336,7 +338,6 @@ public abstract class Scrutin {
                     }
                 }
             }
-
             //On remplit les tab
             tabIdElecteur[i]=idE;
             tabElecteurSondage[i]=getElecteur(idE-1); //-1 à cause du décalage dans tabElecteur
