@@ -45,7 +45,7 @@ public class ScrutinMajoritaireDeuxTours extends ScrutinMajoritaireUnTour{
             for(int j=0;j<getNbCandidat();j++){
                 if(tabRang[j]==i){
                     System.out.println("Candidat "+tabIdCandidats[j]+" est "+i);
-                    tabResult[i-1]=j+1;
+                    tabResult[i-1]=tabIdCandidats[j];
                 }
             }
         }

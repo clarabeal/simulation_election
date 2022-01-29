@@ -166,5 +166,10 @@ public abstract class Scrutin {
         }
     }
 
+    //Retourne vrai si l'utilisateur a rentré des paramètres correctes, faux sinon
+    public boolean bonsParametres() {
+        return (getNbElecteur() == (int) getNbElecteur()) && (getNbCandidat() == (int) getNbCandidat()) && (getNbElecteur() >= 0) && (getNbCandidat() >= 0);
+    }
+
 }
 

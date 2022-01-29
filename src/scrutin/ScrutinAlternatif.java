@@ -50,26 +50,6 @@ public class ScrutinAlternatif extends Scrutin {
         return 0;
     }
 
-    //Redéfinition
-    //Fonction qui retourne un tab contenant le nombre de fois qu'un Candidat a été placé 1er (indice 0 => candidat 1, indice 1 => candidat 2 ...)
-    public int[] getNbVoix(){
-
-        int tabVoix[] = new int[getNbCandidat()];
-        for(int i=0;i<getNbCandidat();i++){
-            tabVoix[i]=0;
-        }
-
-        for(int i=0;i<this.getNbElecteur();i++){
-            //On parcourt tabVote de tous les électeurs
-            for(int j=0;j<this.getNbCandidat();j++){
-                if(getElecteur(i).getVote(j)==1){ //Si égal à 1 on lui rajoute une voix
-                    tabVoix[j]++;
-                }
-            }
-        }
-        return tabVoix;
-    }
-
     //Fonction qui retourne l'indice du Candidat qui a reçu le moins de 1er choix
     public int getIdElimine(){
         int tabVoix[] = new int[getNbCandidat()];
@@ -152,5 +132,25 @@ public class ScrutinAlternatif extends Scrutin {
     //Fonction qui retourne un tab des résultats du scrutin
     public int[] getRangIndice(){
         return this.tabRang;
+    }
+
+    //Redéfinition
+    //Fonction qui retourne un tab contenant le nombre de fois qu'un Candidat a été placé 1er (indice 0 => candidat 1, indice 1 => candidat 2 ...)
+    public int[] getNbVoix(){
+
+        int tabVoix[] = new int[getNbCandidat()];
+        for(int i=0;i<getNbCandidat();i++){
+            tabVoix[i]=0;
+        }
+
+        for(int i=0;i<this.getNbElecteur();i++){
+            //On parcourt tabVote de tous les électeurs
+            for(int j=0;j<this.getNbCandidat();j++){
+                if(getElecteur(i).getVote(j)==1){ //Si égal à 1 on lui rajoute une voix
+                    tabVoix[j]++;
+                }
+            }
+        }
+        return tabVoix;
     }
 }
