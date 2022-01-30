@@ -1,6 +1,6 @@
 package scrutin;
 
-import Affichage.AffichageHist;
+//import Affichage.AffichageHist;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
@@ -89,7 +89,7 @@ public class ScrutinAlternatif extends Scrutin {
         }
         System.out.println(" ");
         String ChartName = "Histogramme du nombre de vote par candidat (VOTE ALTERNATIF TOUR "+CompteurTour+")";
-        AffichageHist.createAndShowGuiName(tabVoix,ChartName);
+        //AffichageHist.createAndShowGuiName(tabVoix,ChartName);
         CompteurTour=CompteurTour+1;
         int min=getNbElecteur(); //Il ne peut pas y avoir plus de voix que d'électeurs
         int idElimine=0;
@@ -151,7 +151,7 @@ public class ScrutinAlternatif extends Scrutin {
             }
         }
         String ChartName = "Histogramme du nombre de vote par candidat (VOTE ALTERNATIF TOUR "+5+")";
-        AffichageHist.createAndShowGuiName(tabVoix,ChartName);
+        //AffichageHist.createAndShowGuiName(tabVoix,ChartName);
         //Affichage tabVoix
         System.out.println("ELECTION TOUR 5");
         System.out.print("nbVoix : ");

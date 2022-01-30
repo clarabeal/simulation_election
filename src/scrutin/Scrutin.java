@@ -242,7 +242,6 @@ public abstract class Scrutin {
 
         }
         setNewTabElecteur(tabElecteurSondage,nbE);
-
     }
     
      public void interactions(){
@@ -294,7 +293,7 @@ public abstract class Scrutin {
                         else if((dist>0) && (getElecteur(i).getRepresentation(j)+0.1<=1)){
                             getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.1);
                         }
-                        //Si la nouvelle valeur allait être supérieure à 1 ou inférieure à 0 on ne change rien
+                        //Si la nouvelle valeur allait être supérieure à 1 ou inférieure à 0 alors on ne change rien
                     }
                 }
             }
@@ -338,7 +337,7 @@ public abstract class Scrutin {
                         else if((dist>0) && (getElecteur(i).getRepresentation(j)+0.1<=1)){
                             getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.1);
                         }
-                        //Si la nouvelle valeur allait être supérieure à 1 ou inférieure à 0 on ne change rien
+                        //Si la nouvelle valeur allait être supérieure à 1 ou inférieure à 0 alors on ne change rien
                     }
                 }
             }
@@ -348,7 +347,7 @@ public abstract class Scrutin {
     //Remet la toute première version de TabCandidat (utile pour afficher dans le CSV les candidats issus d'un scrutin majoritaire à 2 tours
     public void resetTabCandidat(){
         deleteTabCandidat();
-        this.nbCandidat=tabCandidatSauvegarde.length;
+        this.nbCandidat=nbCandidatSauvegarde;
         this.tabCandidat=tabCandidatSauvegarde;
     }
      
@@ -356,6 +355,62 @@ public abstract class Scrutin {
     public void resetTabElecteur(){
         this.nbElecteur=nbElecteurSauvegarde;
         this.tabElecteur=tabElecteurSauvegarde;
+    }
+
+    //Modifie les préférences des électeurs suite aux résultats du sondage
+    public void calculSondage(){
+        //On remplit tabResult
+        int tabResult[] = new int[nbCandidat];
+        tabResult=getResultat();
+
+        System.out.print("Résultats : ");
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabResult[i]+" ");
+        }
+
+        //On cherche les n premiers candidats
+        int nbC = nbCandidat/2;
+        System.out.println("Nb de candidats : "+nbC);
+
+        //On reprend tous les électeurs pour changer leurs préférences
+        resetTabElecteur();
+
+        //On parcourt tous les électeurs
+        for(int i=0;i<nbElecteur;i++){
+            double moyMin=1;
+            double moy=0;
+            int idCandidat=-1;
+            //On parcourt les n premiers candidats
+            for(int j=0;j<nbC;j++){
+                //On calcul la moyenne pour chaque électeur et candidat
+                for(int r=0;r<2;r++){
+                    moy=moy+Math.abs(getElecteur(i).getRepresentation(r)-getCandidat(tabResult[j]-1).getRepresentation(r));
+                }
+                moy=moy/2;
+
+                //On cherche le candidat qui se rapproche le plus des opinions de l'électeur
+                if(moy<moyMin){
+                    moyMin=moy;
+                    idCandidat=tabResult[j];
+                }
+            }
+
+            //On modifie les préférences de l'électeur
+            for(int r=0;r<2;r++){
+                double dist=getElecteur(i).getRepresentation(r)-getCandidat(idCandidat-1).getRepresentation(r);
+
+                //On va venir rapprocher les représentations de l'électeur avec celles du candidat
+                if(Math.abs(dist)>0.1&&dist<0){
+                    getElecteur(i).setRepresentation(r,getElecteur(i).getRepresentation(r)+0.01);
+                }
+                else if(Math.abs(dist)>0.1&&dist>0){
+                    getElecteur(i).setRepresentation(r,getElecteur(i).getRepresentation(r)-0.01);
+                }
+                else{//La valeur absolue de la distance est <0,01 donc on copie la valeur du candidat
+                    getElecteur(i).setRepresentation(r, getCandidat(idCandidat-1).getRepresentation(r));
+                }
+            }
+        }
     }
 
     
@@ -370,31 +425,32 @@ public abstract class Scrutin {
         {
             sommeVote=sommeVote+nbVote[i];
         }
+
         for(int i=0;i<getNbCandidat();i++)
         {
             PercentVote[i]=nbVote[i]/sommeVote;
         }
              
         for(int i=0;i<this.getNbElecteur();i++){
-        int idCandidat=-1;
-        double utiliteMin=1;
+            int idCandidat=-1;
+            double utiliteMin=1;
         
-        //On parcourt tabCandidat pour chaque électeur
-        for(int j=0;j<this.getNbCandidat();j++){
-            double SommeDistRep=0;
-            double utilite=0;
-            //On parcourt toutes les représentations
-            for(int r=0;r<2;r++){ 
-                SommeDistRep=SommeDistRep+Math.abs(getCandidat(j).getRepresentation(r)-getElecteur(i).getRepresentation(r));
+            //On parcourt tabCandidat pour chaque électeur
+            for(int j=0;j<this.getNbCandidat();j++){
+                double SommeDistRep=0;
+                double utilite=0;
+                //On parcourt toutes les représentations
+                for(int r=0;r<2;r++){ 
+                    SommeDistRep=SommeDistRep+Math.abs(getCandidat(j).getRepresentation(r)-getElecteur(i).getRepresentation(r));
+                }
+                SommeDistRep=SommeDistRep/2;
+                utilite=(1-SommeDistRep)*PercentVote[j];
+                //On cherche le candidat qui se rapproche le plus des opinions de l'électeur
+                if(utilite<utiliteMin){
+                    utiliteMin=utilite;
+                    idCandidat=j;
+                }
             }
-            SommeDistRep=SommeDistRep/2;
-            utilite=(1-SommeDistRep)*PercentVote[j];
-            //On cherche le candidat qui se rapproche le plus des opinions de l'électeur
-            if(utilite<utiliteMin){
-                utiliteMin=utilite;
-                idCandidat=j;
-            }
-        }
             for(int j=0;j<2;j++){
                 double dist=getElecteur(i).getRepresentation(j)-getCandidat(idCandidat).getRepresentation(j);
 
@@ -405,7 +461,7 @@ public abstract class Scrutin {
                 else if(Math.abs(dist)>0.005&&dist>0){
                     getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.005);
                 }
-                else{//La valeur absolue de la distance est <0,1 donc on copie la valeur du candidat
+                else{//La valeur absolue de la distance est <0,05 donc on copie la valeur du candidat
                     getElecteur(i).setRepresentation(j, getCandidat(idCandidat).getRepresentation(j));
                 }
                 if(getElecteur(i).getRepresentation(j)<0){
@@ -464,7 +520,7 @@ public abstract class Scrutin {
                 else if(Math.abs(dist)>(0.01*utiliteMin)&&dist>0){
                     getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-(0.01*utiliteMin));
                 }
-                else{//La valeur absolue de la distance est <0,1 donc on copie la valeur du candidat
+                else{//La valeur absolue de la distance est <0,01 donc on copie la valeur du candidat
                     getElecteur(i).setRepresentation(j, getCandidat(idCandidat).getRepresentation(j));
                 }
                 if(getElecteur(i).getRepresentation(j)<0){

@@ -30,7 +30,7 @@ public class Main {
         */
 
         int nbCandidat = 5;
-        int nbElecteur = 92;
+        int nbElecteur = 10;
         int nbAbstention = 0;
 
         //Vote par approbation
@@ -226,5 +226,18 @@ public class Main {
             System.out.print(tabResult5[i]+" ");
         }
         */
+
+        //Test 1er sondage
+
+        ScrutinApprobation s1 = new ScrutinApprobation(nbElecteur,nbCandidat);
+
+        s1.affTabElecteur();
+        System.out.println("");
+        s1.modifTabElecteurSondage();
+        s1.affTabElecteur();
+        System.out.println("");
+        s1.voter();
+        s1.calculSondage();
+        s1.affTabElecteur();
     }
 }

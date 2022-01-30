@@ -1,4 +1,3 @@
-
 package affichage;
 
 import java.awt.*;
