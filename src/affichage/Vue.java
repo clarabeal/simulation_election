@@ -15,7 +15,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
-
+/**
+ * Classe qui permer d'afficher l'application.
+ */
 public class Vue implements ActionListener {
 	
     // attributs :
@@ -40,7 +42,9 @@ public class Vue implements ActionListener {
 
 
     // constructeur :
-
+    /**
+     * Le constructeur de la classe Vue génère tous les composants nécessaires à un affichage de l'application.
+     */
     public Vue() {
         frame = new JFrame("CardLayoutDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,7 +109,13 @@ public class Vue implements ActionListener {
 	
 	
 	// méthodes :
-	
+    
+    /**
+     * Réalise une action en fonction du bouton sur lequel l'utilisateur clique :<br>
+     * - Bouton "Lancer la simulation" : affiche un graphique en fonction des paramètres entrés.<br>
+     * - Bouton "Réinitialiser" : remet les paramètres de base (ceux qu'on a à l'initialisation).<br>
+     * - Bouton "Quitter" : ferme l'application (termine le programme).
+     */	
     @Override
     public void actionPerformed(ActionEvent ae) {
         dialog.dispose();

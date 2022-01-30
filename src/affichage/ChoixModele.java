@@ -1,10 +1,12 @@
-
 package Affichage;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import javax.swing.*;
 
+/**
+ * Classe qui permet de créer un menu déroulant pour choisir un modèle et ses paramètres.
+ */
 public class ChoixModele extends Choix {
 
 	// attributs :
@@ -33,6 +35,9 @@ public class ChoixModele extends Choix {
     
     // constructeur :
     
+    /**
+     * Le constructeur permet de créer un menu déroulant pour choisir un modèle et ses paramètres.
+     */
     public ChoixModele() {
     	panelComboBox = new JPanel();
     	comboBox = new JComboBox<String>(comboBoxItems);
@@ -136,6 +141,10 @@ public class ChoixModele extends Choix {
     
     // méthodes :
     
+    /**
+	 * Remet les paramètres de base (ceux qu'on a à l'initialisation).<br>
+	 * Cela vide donc toutes les zones de texte et remet le choix initial (modèle MUT).
+	 */
     @Override
     public void reinitialiser() {
     	tfElecteurMUT.setText("");
@@ -160,11 +169,19 @@ public class ChoixModele extends Choix {
     	comboBox.setSelectedItem(SCRUTIN_MAJORITAIRE_UN_TOUR);
     }
     
-        @Override
+    /**
+     * Renvoie le choix sélectionné par le menu déroulant (pour le modèle).
+     * @return Le choix sélectionné par le menu déroulant (pour le modèle).
+     */
+    @Override
     public Object getSelection() {
     	return comboBox.getSelectedItem();
     }
     
+    /**
+	 * Renvoie les paramètres entrés par l'utilisateur dans les zones de texte pour le modèle MUT
+	 * @return Un tableau contenant les paramètres entrés par l'utilisateur dans les zones de texte pour le modèle MUT.
+	 */
     public String[] getMUTValues() {
     	String[] tab = new String[4];
     	tab[0] = tfElecteurMUT.getText();
@@ -174,6 +191,10 @@ public class ChoixModele extends Choix {
     	return tab;
     }
     
+    /**
+	 * Renvoie les paramètres entrés par l'utilisateur dans les zones de texte pour le modèle MDT
+	 * @return Un tableau contenant les paramètres entrés par l'utilisateur dans les zones de texte pour le modèle MDT.
+	 */
     public String[] getMDTValues() {
     	String[] tab = new String[4];
     	tab[0] = tfElecteurMDT.getText();
@@ -184,6 +205,10 @@ public class ChoixModele extends Choix {
     	return tab;
     }
     
+    /**
+	 * Renvoie les paramètres entrés par l'utilisateur dans les zones de texte pour le modèle BORDA
+	 * @return Un tableau contenant les paramètres entrés par l'utilisateur dans les zones de texte pour le modèle BORDA.
+	 */
     public String[] getBORDAValues() {
     	String[] tab = new String[3];
     	tab[0] = tfElecteurBORDA.getText();
@@ -193,6 +218,10 @@ public class ChoixModele extends Choix {
     	return tab;
     }
     
+    /**
+	 * Renvoie les paramètres entrés par l'utilisateur dans les zones de texte pour le modèle APPROBATION
+	 * @return Un tableau contenant les paramètres entrés par l'utilisateur dans les zones de texte pour le modèle APPROBATION.
+	 */
     public String[] getAPPROBATIONValues() {
     	String[] tab = new String[4];
     	tab[0] = tfElecteurAPPROBATION.getText();
@@ -203,6 +232,10 @@ public class ChoixModele extends Choix {
     	return tab;
     }
     
+    /**
+	 * Renvoie les paramètres entrés par l'utilisateur dans les zones de texte pour le modèle ALTERNATIF
+	 * @return Un tableau contenant les paramètres entrés par l'utilisateur dans les zones de texte pour le modèle ALTERNATIF.
+	 */
     public String[] getALTERNATIFValues() {
     	String[] tab = new String[3];
     	tab[0] = tfElecteurALTERNATIF.getText();
@@ -211,12 +244,20 @@ public class ChoixModele extends Choix {
     	return tab;
     }
     
+    /**
+	 * Ajoute le menu déroulant à un objet de classe Container.
+	 * @param c
+	 * 		L'objet de classe Container auquel on veut ajouter le menu déroulant.
+	 */
         @Override
     public void addComponentToPane(Container c) {
         c.add(panelComboBox, BorderLayout.PAGE_START);
         c.add(cards, BorderLayout.CENTER);
     }
 
+    /**
+     * Change les zones de textes en fonction du choix dans le menu déroulant.
+     */
         @Override
     public void itemStateChanged(ItemEvent evt) {
         CardLayout cl = (CardLayout)(cards.getLayout());

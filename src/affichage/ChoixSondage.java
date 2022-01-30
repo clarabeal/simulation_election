@@ -1,10 +1,12 @@
-
 package Affichage;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import javax.swing.*;
 
+/**
+ * Classe qui permet de créer un menu déroulant pour choisir quel sondage l'utilisateur veut chosir.
+ */
 public class ChoixSondage extends Choix {
 
     // attributs :
@@ -25,6 +27,9 @@ public class ChoixSondage extends Choix {
     
     // constructeur :
     
+    /**
+     * Le constructeur permet de créer un menu déroulant pour choisir le sondage
+     */
     public ChoixSondage() {
         panelComboBox = new JPanel();
         comboBox = new JComboBox<String>(comboBoxItems);
@@ -59,6 +64,10 @@ public class ChoixSondage extends Choix {
         cards.add(card3, SONDAGE_UTILITE_PORPORTION);
     }
 
+    /**
+	 * Remet les paramètres de base (ceux qu'on a à l'initialisation).<br>
+	 * Cela vide donc toutes les zones de texte et remet le choix initial (scrutin PREFERENCE).
+	 */
     @Override
     public void reinitialiser() {
     	NBSONDAGEPREFERENCE.setText("");
@@ -67,6 +76,10 @@ public class ChoixSondage extends Choix {
     	comboBox.setSelectedItem(SONDAGE_PREFERENCE);
     }
     
+    /**
+	 * Renvoie le paramètre entré par l'utilisateur dans la zone de texte du sondage PREFERENCE 
+	 * @return Une chaine de caractère contenant le paramètre entré par l'utilisateur dans la zones de texte du sondage PREFERENCE
+	 */
     public String getPREFERENCEValue() {
     	String tab;
     	tab = NBSONDAGEPREFERENCE.getText();
@@ -74,6 +87,10 @@ public class ChoixSondage extends Choix {
     	return tab;
     }
     
+    /**
+	 * Renvoie le paramètre entré par l'utilisateur dans la zone de texte du sondage UTILITE 
+	 * @return Une chaine de caractère contenant le paramètre entré par l'utilisateur dans la zones de texte du sondage UTILITE
+	 */
     public String getUTILITEValue() {
     	String tab;
     	tab = NBSONDAGEUTILITE.getText();
@@ -81,6 +98,10 @@ public class ChoixSondage extends Choix {
     	return tab;
     }
     
+    /**
+	 * Renvoie le paramètre entré par l'utilisateur dans la zone de texte du sondage UTILITE PROPORTION
+	 * @return Une chaine de caractère contenant le paramètre entré par l'utilisateur dans la zones de texte du sondage UTILITE PROPORTION
+	 */
     public String getUTILITEPROPORValue() {
     	String tab;
     	tab = NBSONDAGEUTILITEPORPOR.getText();
@@ -88,28 +109,33 @@ public class ChoixSondage extends Choix {
     	return tab;
     }
 
+    /**
+	 * Renvoie le choix sélectionné par le menu déroulant (pour le modèle).
+	 * @return Le choix sélectionné par le menu déroulant (pour le modèle).
+	 */
         @Override
     public Object getSelection() {
     	return comboBox.getSelectedItem();
     }
 
+    /**
+	 * Ajoute le menu déroulant à un objet de classe Container.
+	 * @param c
+	 * 		L'objet de classe Container auquel on veut ajouter le menu déroulant.
+	 */
+    @Override
     public void addComponentToPane(Container c) {
         c.add(panelComboBox, BorderLayout.PAGE_START);
         c.add(cards, BorderLayout.CENTER);
     }
 
+    /**
+     * Change les zones de textes en fonction du choix dans le menu déroulant.
+     */
         @Override
     public void itemStateChanged(ItemEvent evt) {
         CardLayout cl = (CardLayout)(cards.getLayout());
         cl.show(cards, (String)evt.getItem());
     }
-
-
-
-
-
-
-
-	
 	
 }

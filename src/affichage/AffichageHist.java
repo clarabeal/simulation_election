@@ -16,15 +16,22 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 
-@SuppressWarnings("serial")
 /**
- *
- * @author hugol
+ * AffichageHist est la classe qui permet l'affichage d'un histogramme
  */
+@SuppressWarnings("serial")
 public class AffichageHist{
 
+    /**
+	 * Le construteur de la classe
+	 */
     public AffichageHist(){}
     
+    /** 
+     * Fonction qui crée et affiche l'histogramme
+     * @param array
+	 * 		Le tableau contenant les résultats du vote
+     */
     public static void createAndShowGui(int[] array)
     {
         JFrame frame = new JFrame();
@@ -48,6 +55,12 @@ public class AffichageHist{
         frame.setVisible(true);
     }
     
+    /** 
+     * Fonction qui permet d'obtenir l'initialisation de l'histogramme
+     * @param array
+	 * 		Le tableau contenant les résultats du vote
+     *@return chart           
+     */
     private static JFreeChart getHistogramChart(String name, double[] dataArray)
     {
         String plotTitle = name;
@@ -74,6 +87,13 @@ public class AffichageHist{
         return chart;
     }
     
+    /** 
+     * Fonction qui crée et affiche l'histogramme
+     * @param array
+	 * 		Le tableau contenant les résultats du vote
+     * @param ChartName
+	 * 		Contient une chaine de caractère à afficher en titre (utile pour les votes à plusieurs scrutins
+     */
     public static void createAndShowGuiName(int[] array, String ChartName)
     {
         JFrame frame = new JFrame();
