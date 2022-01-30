@@ -139,7 +139,16 @@ public class Vue implements ActionListener {
                         int nbAbstention=0;
                         for(int i=0;i<Integer.parseInt(tabString[3]);i++)
                         {
-                           s1.interactions();
+                                System.out.println("Electeur AVANT INTERACTION");
+                                System.out.println("");
+                                s1.affTabElecteur();
+                                System.out.println("");
+                                s1.interactions();
+                                System.out.println("");
+                                System.out.println("Electeur APRES INTERACTIONS");
+                                System.out.println("");
+                                s1.affTabElecteur();
+                                System.out.println("");
                         }
 
                         int[] countVote;
@@ -231,7 +240,16 @@ public class Vue implements ActionListener {
                         int nbAbstention=0;
                         for(int i=0;i<Integer.parseInt(tabString[3]);i++)
                         {
-                            s2.interactions();
+                                System.out.println("Electeur AVANT INTERACTION");
+                                System.out.println("");
+                                s2.affTabElecteur();
+                                System.out.println("");
+                                s2.interactions();
+                                System.out.println("");
+                                System.out.println("Electeur APRES INTERACTIONS");
+                                System.out.println("");
+                                s2.affTabElecteur();
+                                System.out.println("");
                         }
                         int[] countVote;
                         if(choixSondage.getSelection()==ChoixSondage.SONDAGE_PREFERENCE){
@@ -326,7 +344,16 @@ public class Vue implements ActionListener {
                         int nbAbstention=0;
                         for(int i=0;i<Integer.parseInt(tabString[3]);i++)
                         {
-                            s3.interactions();
+                                System.out.println("Electeur AVANT INTERACTION");
+                                System.out.println("");
+                                s3.affTabElecteur();
+                                System.out.println("");
+                                s3.interactions();
+                                System.out.println("");
+                                System.out.println("Electeur APRES INTERACTIONS");
+                                System.out.println("");
+                                s3.affTabElecteur();
+                                System.out.println("");
                         }
                         int[] countVote;
                         if(choixSondage.getSelection()==ChoixSondage.SONDAGE_PREFERENCE){
@@ -410,7 +437,16 @@ public class Vue implements ActionListener {
                         ScrutinBorda s4 = new ScrutinBorda(tabDouble[0],tabDouble[1]);
                         for(int i=0;i<Integer.parseInt(tabString[2]);i++)
                         {
-                            s4.interactions();
+                                System.out.println("Electeur AVANT INTERACTION");
+                                System.out.println("");
+                                s4.affTabElecteur();
+                                System.out.println("");
+                                s4.interactions();
+                                System.out.println("");
+                                System.out.println("Electeur APRES INTERACTIONS");
+                                System.out.println("");
+                                s4.affTabElecteur();
+                                System.out.println("");
                         }
                         int[] countVote;
                         if(choixSondage.getSelection()==ChoixSondage.SONDAGE_PREFERENCE){
@@ -497,7 +533,16 @@ public class Vue implements ActionListener {
                         int nbAbstention=0;
                         for(int i=0;i<Integer.parseInt(tabString[2]);i++)
                         {
-                            s5.interactions();
+                                System.out.println("Electeur AVANT INTERACTION");
+                                System.out.println("");
+                                s5.affTabElecteur();
+                                System.out.println("");
+                                s5.interactions();
+                                System.out.println("");
+                                System.out.println("Electeur APRES INTERACTIONS");
+                                System.out.println("");
+                                s5.affTabElecteur();
+                                System.out.println("");
                         }
                         int[] countVote;
                         if(choixSondage.getSelection()==ChoixSondage.SONDAGE_PREFERENCE){
