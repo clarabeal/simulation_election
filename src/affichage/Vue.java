@@ -1,4 +1,5 @@
 package affichage;
+
 import scrutin.*;
 
 import java.awt.BorderLayout;
@@ -8,7 +9,7 @@ import java.awt.GridLayout;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -18,19 +19,20 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
+
 public class Vue implements ActionListener {
 	
 	// attributs :
 	
-	public final static int NBITERATIONS = 1000;
+	public final static int NBITERATIONS = 0;
 	
 	private JFrame frame;
 	private JPanel panelConsigne;
 	private JLabel labelConsigne;
 	private JPanel panelChoixModele;
 	private ChoixModele choixModele;
-	private JPanel panelChoixSpatialisation;
-	//private ChoixSpatialisation choixSpatialisation;
+    private JPanel panelChoixSondage;
+	private ChoixSondage choixSondage;
 	private JPanel panelBoutons;
 	private JButton bLancer;
 	private JButton bReinitialiser;
@@ -39,12 +41,10 @@ public class Vue implements ActionListener {
 	private JPanel panelDialog;
 	private JLabel labelDialog;
 	private JPanel panelCentre;
-	private AffichageHist Affi;
-
 	
 	// constructeur :
 	
-	public Vue() {
+	public VUE() {
 		frame = new JFrame("CardLayoutDemo");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
@@ -65,14 +65,13 @@ public class Vue implements ActionListener {
 		panelChoixModele.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 		choixModele.addComponentToPane(panelChoixModele);
 		panelCentre.add(panelChoixModele);
+                
+        choixSondage = new ChoixSondage();
+		panelChoixSondage = new JPanel(new BorderLayout());
+		panelChoixSondage.setBorder(BorderFactory.createEmptyBorder(0, 150, 0, 150));
+		choixSondage.addComponentToPane(panelChoixSondage);
+		panelCentre.add(panelChoixSondage);
         
-		/*
-        choixSpatialisation = new ChoixSpatialisation();
-		panelChoixSpatialisation = new JPanel(new BorderLayout());
-		panelChoixSpatialisation.setBorder(BorderFactory.createEmptyBorder(0, 150, 0, 150));
-		choixSpatialisation.addComponentToPane(panelChoixSpatialisation);
-		panelCentre.add(panelChoixSpatialisation);
-		*/
 		
 		panelCentre.setBorder(BorderFactory.createEmptyBorder(30, 0, 30, 0));
 		frame.add(panelCentre, BorderLayout.CENTER);
@@ -111,141 +110,303 @@ public class Vue implements ActionListener {
 	// méthodes :
 	
     @Override
-	public void actionPerformed(ActionEvent ae){
+	public void actionPerformed(ActionEvent ae) {
 		dialog.dispose();
 		dialog.setLocationRelativeTo(frame);
-		if(ae.getSource() == bLancer){
-			try{
-				if(choixModele.getSelection() == ChoixModele.SCRUTIN_MAJORITAIRE_UN_TOUR){
+		if (ae.getSource() == bLancer) {
+			try {
+				if (choixModele.getSelection() == ChoixModele.SCRUTIN_MAJORITAIRE_UN_TOUR) {
+					
 					String[] tabString = choixModele.getMUTValues();
-					int[] tabDouble = new int[3];
+					int[] tabDouble = new int[4];
 											
-					for (int i = 0; i < tabString.length-1; i++){
+					for (int i = 0; i < tabString.length-2; i++) {
 						tabDouble[i] = Integer.parseInt(tabString[i]);
 					}
-											
+                                                
 					double getSeuil = Double.parseDouble(tabString[2]);
-
+					
 					ScrutinMajoritaireUnTour s1 = new ScrutinMajoritaireUnTour(tabDouble[0],tabDouble[1]);
 					s1.setSeuil(getSeuil);
-					int nbAbstention=s1.voter();
-					s1.ToString(nbAbstention);
-					System.out.println("electeur : "+s1.getNbElecteur()+" candidat: "+s1.getNbCandidat());
-					if (s1.bonsParametres()){
-						AffichageHist.createAndShowGui(s1.getNbVoix());
-						s1.getCSV();
-					} 
-					else{
-						labelDialog.setText("<html>Veuillez entrer un entier supérieur ou égal à 0 pour les nombres S0, E0, I0, et R0.<br>Veuillez entrer un réel compris entre 0 et 1 (inclus) pour les probabilités.</html>");
-						dialog.setVisible(true);
+					int nbAbstention=0;
+					for(int i=0;i<Integer.parseInt(tabString[3]);i++)
+					{
+						s1.interactions();
 					}
+    
+					int[] countVote;
+					if(choixSondage.getSelection()==ChoixSondage.SONDAGE_PREFERENCE){
+							for(int i=0;i<Integer.parseInt(choixSondage.getPREFERENCEValue());i++)
+							{
+								
+								s1.modifTabElecteurSondage();
+								s1.voter();
+								countVote=s1.getNbVoix();
+								s1.resetTabElecteur();
+								//s1.CalculSondageUtilite(countVote);
+							}
+					}
+					else if(choixSondage.getSelection()==ChoixSondage.SONDAGE_UTILITE){
+							for(int i=0;i<Integer.parseInt(choixSondage.getUTILITEValue());i++)
+							{
+									System.out.print("yooo poto");
+								s1.modifTabElecteurSondage();
+								s1.voter();
+								countVote=s1.getNbVoix();
+								s1.resetTabElecteur();
+								s1.CalculSondageUtilite(countVote);
+							}
+					}
+					else if(choixSondage.getSelection()==ChoixSondage.SONDAGE_UTILITE_PORPORTION){
+							for(int i=0;i<Integer.parseInt(choixSondage.getUTILITEPROPORValue());i++)
+							{
+								s1.modifTabElecteurSondage();
+								s1.voter();
+								countVote=s1.getNbVoix();
+								s1.resetTabElecteur();
+								s1.CalculSondageUtilitePropor(countVote);
+							}
+					}
+                                                                      
+					nbAbstention=s1.voter();
+					s1.ToString(nbAbstention);
+					AffichageHist.createAndShowGui(s1.getNbVoix());
+					s1.getCSV();
+
 				}
-                else if (choixModele.getSelection() == ChoixModele.SCRUTIN_MAJORITAIRE_DEUX_TOUR){
+                else if (choixModele.getSelection() == ChoixModele.SCRUTIN_MAJORITAIRE_DEUX_TOUR) {
+						
 					String[] tabString = choixModele.getMDTValues();
-					int[] tabDouble = new int[3];
+					int[] tabDouble = new int[4];
 											
-					for (int i = 0; i < tabString.length-1; i++){
+					for (int i = 0; i < tabString.length-2; i++) {
 						tabDouble[i] = Integer.parseInt(tabString[i]);
 					}
-											
+                                                
 					double getSeuil = Double.parseDouble(tabString[2]);
 
 					ScrutinMajoritaireDeuxTours s2 = new ScrutinMajoritaireDeuxTours(tabDouble[0],tabDouble[1]);
 					s2.setSeuil(getSeuil);
-					int nbAbstention=s2.voter();
-					System.out.println("electeur : "+s2.getNbElecteur()+" candidat: "+s2.getNbCandidat());
-					if (s2.bonsParametres()){
-						AffichageHist.createAndShowGui(s2.getNbVoix());
-						s2.modifTabCandidat(s2.ToString1erTour(nbAbstention));      
-						nbAbstention=s2.voter();
-						s2.ToString2eTour(nbAbstention);
-						AffichageHist.createAndShowGui(s2.getNbVoix());
-						s2.getCSV();
-					} else {
-						labelDialog.setText("<html>Veuillez entrer un entier supérieur ou égal à 0 pour les nombres S0, E0, I0, et R0.<br>Veuillez entrer un réel compris entre 0 et 1 (inclus) pour les probabilités.</html>");
-						dialog.setVisible(true);
+					
+					int nbAbstention=0;
+					for(int i=0;i<Integer.parseInt(tabString[3]);i++)
+					{
+						s2.interactions();
 					}
+					int[] countVote;
+					if(choixSondage.getSelection()==ChoixSondage.SONDAGE_PREFERENCE){
+							for(int i=0;i<Integer.parseInt(choixSondage.getPREFERENCEValue());i++)
+							{
+								
+								s2.modifTabElecteurSondage();
+								s2.voter();
+								countVote=s2.getNbVoix();
+								s2.resetTabElecteur();
+								//s1.CalculSondageUtilite(countVote);
+							}
+					}
+					else if(choixSondage.getSelection()==ChoixSondage.SONDAGE_UTILITE){
+							for(int i=0;i<Integer.parseInt(choixSondage.getUTILITEValue());i++)
+							{
+								s2.modifTabElecteurSondage();
+								s2.voter();
+								countVote=s2.getNbVoix();
+								s2.resetTabElecteur();
+								s2.CalculSondageUtilite(countVote);
+							}
+					}
+					else if(choixSondage.getSelection()==ChoixSondage.SONDAGE_UTILITE_PORPORTION){
+							for(int i=0;i<Integer.parseInt(choixSondage.getUTILITEPROPORValue());i++)
+							{
+								s2.modifTabElecteurSondage();
+								s2.voter();
+								countVote=s2.getNbVoix();
+								s2.resetTabElecteur();
+								s2.CalculSondageUtilitePropor(countVote);
+							}
+					}
+
+					nbAbstention=s2.voter();
+					int[] arrayVote1 = s2.getNbVoix();
+                                                
+					AffichageHist.createAndShowGuiName(s2.getNbVoix(),"Histogramme du nombre de vote par candidat (majoritaire TOUR 1)");
+					s2.modifTabCandidat(s2.ToString1erTour(nbAbstention));      
+					nbAbstention=s2.voter();
+					s2.ToString2eTour(nbAbstention);
+					AffichageHist.createAndShowGuiName(s2.getNbVoix(),"Histogramme du nombre de vote par candidat (majoritaire TOUR 2)");
+					s2.getCSV(arrayVote1);
+
 				}
-                else if (choixModele.getSelection() == ChoixModele.SCRUTIN_APPROBATION){
+                else if (choixModele.getSelection() == ChoixModele.SCRUTIN_APPROBATION) {
+					
+					System.out.println("yoooooooo");
 					String[] tabString = choixModele.getAPPROBATIONValues();
-					int[] tabDouble = new int[3];
-											
-					for (int i = 0; i < tabString.length-1; i++){
+					int[] tabDouble = new int[4];
+												System.out.println("yoooooooop");
+					for (int i = 0; i < tabString.length-2; i++) {
 						tabDouble[i] = Integer.parseInt(tabString[i]);
 					}
-											
 					double getSeuil = Double.parseDouble(tabString[2]);
 					
+					System.out.println("YOO"+tabString[0]+" "+tabString[1]+(tabString[2])+tabString[3]);
+					
 					ScrutinApprobation s3 = new ScrutinApprobation(tabDouble[0],tabDouble[1]);
-					s3.setSeuil(getSeuil);                                                 
-					int nbAbstention=s3.voter();
+					s3.setSeuil(getSeuil);     
 					
+					int nbAbstention=0;
+					for(int i=0;i<Integer.parseInt(tabString[3]);i++)
+					{
+						s3.interactions();
+					}
+					int[] countVote;
+					if(choixSondage.getSelection()==ChoixSondage.SONDAGE_PREFERENCE){
+							for(int i=0;i<Integer.parseInt(choixSondage.getPREFERENCEValue());i++)
+							{
+								
+								s3.modifTabElecteurSondage();
+								s3.voter();
+								countVote=s3.getNbVoix();
+								s3.resetTabElecteur();
+								//s1.CalculSondageUtilite(countVote);
+							}
+					}
+					else if(choixSondage.getSelection()==ChoixSondage.SONDAGE_UTILITE){
+							for(int i=0;i<Integer.parseInt(choixSondage.getUTILITEValue());i++)
+							{
+								s3.modifTabElecteurSondage();
+								s3.voter();
+								countVote=s3.getNbVoix();
+								s3.resetTabElecteur();
+								s3.CalculSondageUtilite(countVote);
+							}
+					}
+					else if(choixSondage.getSelection()==ChoixSondage.SONDAGE_UTILITE_PORPORTION){
+							for(int i=0;i<Integer.parseInt(choixSondage.getUTILITEPROPORValue());i++)
+							{
+								s3.modifTabElecteurSondage();
+								s3.voter();
+								countVote=s3.getNbVoix();
+								s3.resetTabElecteur();
+								s3.CalculSondageUtilitePropor(countVote);
+							}
+					}
+					nbAbstention=s3.voter();
 					s3.ToString(nbAbstention);
-												
-					System.out.println("electeur : "+s3.getNbElecteur()+" candidat: "+s3.getNbCandidat());
-					if (s3.bonsParametres()){
-						AffichageHist.createAndShowGui(s3.getNbVoix());
-						s3.getCSV();
-						
-					}
-					else{
-						labelDialog.setText("<html>Veuillez entrer un entier supérieur ou égal à 0 pour les nombres S0, E0, I0, et R0.<br>Veuillez entrer un réel compris entre 0 et 1 (inclus) pour les probabilités.</html>");
-						dialog.setVisible(true);
-					}
+					AffichageHist.createAndShowGui(s3.getNbVoix());
+					s3.getCSV();
 				}
-            	else if (choixModele.getSelection() == ChoixModele.SCRUTIN_BORDA){
+                else if (choixModele.getSelection() == ChoixModele.SCRUTIN_BORDA) {
 											
-					String[] tabString = choixModele.getBORDAValues();
-					int[] tabDouble = new int[2];
-											
-					for (int i = 0; i < tabString.length; i++){
-						tabDouble[i] = Integer.parseInt(tabString[i]);
-					}
-
-					ScrutinBorda s4 = new ScrutinBorda(tabDouble[0],tabDouble[1]);
-					s4.voter();
-					s4.ToString();
-					System.out.println("electeur : "+s4.getNbElecteur()+" candidat: "+s4.getNbCandidat());
-					if (s4.bonsParametres()){
+						String[] tabString = choixModele.getBORDAValues();
+						int[] tabDouble = new int[3];
+                                                
+						for (int i = 0; i < tabString.length-1; i++) {
+							tabDouble[i] = Integer.parseInt(tabString[i]);
+						}
+                                                
+                                            
+						ScrutinBorda s4 = new ScrutinBorda(tabDouble[0],tabDouble[1]);
+						for(int i=0;i<Integer.parseInt(tabString[2]);i++)
+						{
+							s4.interactions();
+						}
+						int[] countVote;
+						if(choixSondage.getSelection()==ChoixSondage.SONDAGE_PREFERENCE){
+							for(int i=0;i<Integer.parseInt(choixSondage.getPREFERENCEValue());i++)
+							{
+								
+								s4.modifTabElecteurSondage();
+								s4.voter();
+								countVote=s4.getNbVoix();
+								s4.resetTabElecteur();
+								//s1.CalculSondageUtilite(countVote);
+							}
+                        }
+						else if(choixSondage.getSelection()==ChoixSondage.SONDAGE_UTILITE){
+								for(int i=0;i<Integer.parseInt(choixSondage.getUTILITEValue());i++)
+								{
+									s4.modifTabElecteurSondage();
+									s4.voter();
+									countVote=s4.getNbVoix();
+									s4.resetTabElecteur();
+									s4.CalculSondageUtilite(countVote);
+								}
+						}
+						else if(choixSondage.getSelection()==ChoixSondage.SONDAGE_UTILITE_PORPORTION){
+								for(int i=0;i<Integer.parseInt(choixSondage.getUTILITEPROPORValue());i++)
+								{
+									s4.modifTabElecteurSondage();
+									s4.voter();
+									countVote=s4.getNbVoix();
+									s4.resetTabElecteur();
+									s4.CalculSondageUtilitePropor(countVote);
+								}
+						}
+						s4.voter();
+						s4.ToString();
 						AffichageHist.createAndShowGui(s4.getNbVoix());
-					} 
-					else{
-						labelDialog.setText("<html>Veuillez entrer un entier supérieur ou égal à 0 pour les nombres S0, E0, I0, et R0.<br>Veuillez entrer un réel compris entre 0 et 1 (inclus) pour les probabilités.</html>");
-						dialog.setVisible(true);
-					}
+						s4.getCSV();
 				}
-                else if (choixModele.getSelection() == ChoixModele.SCRUTIN_ALTERNATIF){
-					
+				else if (choixModele.getSelection() == ChoixModele.SCRUTIN_ALTERNATIF) {
+				
 					String[] tabString = choixModele.getALTERNATIFValues();
-					int[] tabDouble = new int[2];
+					int[] tabDouble = new int[3];
 											
-					for (int i = 0; i < tabString.length; i++){
+					for (int i = 0; i < tabString.length-1; i++) {
 						tabDouble[i] = Integer.parseInt(tabString[i]);
 					}
-
+										
 					ScrutinAlternatif s5 = new ScrutinAlternatif(tabDouble[0],tabDouble[1]);
-					s5.voter();
+					int nbAbstention=0;
+					for(int i=0;i<Integer.parseInt(tabString[2]);i++)
+					{
+						s5.interactions();
+					}
+					int[] countVote;
+					if(choixSondage.getSelection()==ChoixSondage.SONDAGE_PREFERENCE){
+						for(int i=0;i<Integer.parseInt(choixSondage.getPREFERENCEValue());i++)
+						{
+							
+							s5.modifTabElecteurSondage();
+							s5.voter();
+							countVote=s5.getNbVoix();
+							s5.resetTabElecteur();
+							//s1.CalculSondageUtilite(countVote);
+						}
+					}
+					else if(choixSondage.getSelection()==ChoixSondage.SONDAGE_UTILITE){
+							for(int i=0;i<Integer.parseInt(choixSondage.getUTILITEValue());i++)
+							{
+								s5.modifTabElecteurSondage();
+								s5.voter();
+								countVote=s5.getNbVoix();
+								s5.resetTabElecteur();
+								s5.CalculSondageUtilite(countVote);
+							}
+					}
+					else if(choixSondage.getSelection()==ChoixSondage.SONDAGE_UTILITE_PORPORTION){
+							for(int i=0;i<Integer.parseInt(choixSondage.getUTILITEPROPORValue());i++)
+							{
+								s5.modifTabElecteurSondage();
+								s5.voter();
+								countVote=s5.getNbVoix();
+								s5.resetTabElecteur();
+								s5.CalculSondageUtilitePropor(countVote);
+							}
+					}
+					nbAbstention=s5.voter();
 					s5.voterElimine();
 					s5.ToString();
-					System.out.println("electeur : "+s5.getNbElecteur()+" candidat: "+s5.getNbCandidat());
-					if (s5.bonsParametres()){
-						//AffichageHist.createAndShowGui(s5.getNbVoix());
-					} 
-					else{
-						labelDialog.setText("<html>Veuillez entrer un entier supérieur ou égal à 0 pour les nombres S0, E0, I0, et R0.<br>Veuillez entrer un réel compris entre 0 et 1 (inclus) pour les probabilités.</html>");
-						dialog.setVisible(true);
-					}
+					s5.getCSV();
+					//AffichageHist.createAndShowGui(s5.getNbVoix());
 				}
-			} 
-			catch (Exception e){
-				labelDialog.setText("Veuillez entrer tous les paramètres nécessaires.");
+			} catch (Exception e) {
+				labelDialog.setText("Vérifiez que les valeurs saisies soient justes.");
 				dialog.setVisible(true);
 			}
-		}
-		else if (ae.getSource() == bReinitialiser){
+		} else if (ae.getSource() == bReinitialiser) {
 			choixModele.reinitialiser();
-		} 
-		else{
+		} else {
 			frame.dispose();
 		}
 	}
