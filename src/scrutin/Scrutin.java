@@ -400,10 +400,10 @@ public abstract class Scrutin {
                 double dist=getElecteur(i).getRepresentation(r)-getCandidat(idCandidat-1).getRepresentation(r);
 
                 //On va venir rapprocher les représentations de l'électeur avec celles du candidat
-                if(Math.abs(dist)>0.1&&dist<0){
+                if(Math.abs(dist)>0.01&&dist<0){
                     getElecteur(i).setRepresentation(r,getElecteur(i).getRepresentation(r)+0.01);
                 }
-                else if(Math.abs(dist)>0.1&&dist>0){
+                else if(Math.abs(dist)>0.01&&dist>0){
                     getElecteur(i).setRepresentation(r,getElecteur(i).getRepresentation(r)-0.01);
                 }
                 else{//La valeur absolue de la distance est <0,01 donc on copie la valeur du candidat
