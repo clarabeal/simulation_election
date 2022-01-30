@@ -1,4 +1,5 @@
-package affichage;
+
+package Affichage;
 
 import java.awt.*;
 import java.awt.event.ItemEvent;
@@ -19,7 +20,7 @@ public class ChoixModele extends Choix {
     public final static String SCRUTIN_ALTERNATIF = "Vote alternatif";
     private String comboBoxItems[] = { SCRUTIN_MAJORITAIRE_UN_TOUR, SCRUTIN_MAJORITAIRE_DEUX_TOUR, SCRUTIN_APPROBATION
                                       ,SCRUTIN_ALTERNATIF, SCRUTIN_BORDA };
-	private JPanel panelComboBox;
+    private JPanel panelComboBox;
     private JComboBox<String> comboBox;
     private JPanel cards;
     private JPanel card1;

@@ -2,15 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package affichage;
+package Affichage;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Paint;
-
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -26,11 +22,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
  * @author hugol
  */
 public class AffichageHist{
-    
-    
-    public AffichageHist(){
-        
-    }
+
+    public AffichageHist(){}
     
     public static void createAndShowGui(int[] array)
     {

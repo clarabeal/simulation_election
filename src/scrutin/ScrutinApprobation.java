@@ -3,16 +3,29 @@ package scrutin;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+/**
+ * ScrutinApprobation est la classe qui hérite de la classe Scrutin
+ * Le système du vote approbation est que chaque électeur peut voter pour le nombre de candidats qu’il souhaite, le vainqueur
+ * est celui qui a récolté le plus de voix
+ */
 public class ScrutinApprobation extends Scrutin {
 
+    /**
+	 * Le construteur de la classe
+	 * @param nbE
+	 * 		Le nombre d'électeurs
+	 * @param nbC
+	 * 		Le nombre de candidats
+	 */
     public ScrutinApprobation(int nbE, int nbC){
         super(nbE,nbC);
     }
 
     /**
-    * @Override
+    * Remplit tabVote de chaque Electeur avec les identifiants des Candidats pour lequel il souhaite voter
+    * @return Le nombre d'abstentions
     */
-    //Remplit tabVote de chaque Electeur avec les identifiants des Candidats pour lequel il souhaite voter et retourne le nb d'abstention
+    @Override
     public int voter(){
         int nbAbstention=0;
         //On parcourt tabElecteur
@@ -25,17 +38,13 @@ public class ScrutinApprobation extends Scrutin {
                 for(int r=0;r<2;r++){ 
                     moy=moy+Math.abs(getCandidat(j).getRepresentation(r)-getElecteur(i).getRepresentation(r));
                 }
-
                 moy=moy/2;
 
-                if(moy<getSeuil()){
-                    
+                if(moy<getSeuil()){ 
                     getElecteur(i).setVote(iVote,getCandidat(j).getIdCandidat());   
-                    iVote++;
-                    
+                    iVote++;  
                 }
             }
-
             //On parcourt tabVote
             boolean vide=true;
             for(int c=0;c<getNbCandidat();c++){
@@ -53,7 +62,11 @@ public class ScrutinApprobation extends Scrutin {
         return nbAbstention;
     }
     
-    
+    /**
+	 * Affichage du gagnant et du nombre de voix par candidat
+     *  @param abstention
+	 * 		Le nombre d'abstention
+	 */  
     public void ToString(int abstention){
         System.out.println("");
         System.out.println("");
@@ -84,7 +97,7 @@ public class ScrutinApprobation extends Scrutin {
     }
     
     /**
-	 * Permet la création d'un fichier CSV.
+	 * Permet la création d'un fichier CSV
 	 */  
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void getCSV() {
@@ -97,7 +110,7 @@ public class ScrutinApprobation extends Scrutin {
         ArrayList value7 = new ArrayList();
         ArrayList value8 = new ArrayList();
 
-                
+        
         int tabVoix2[] = new int[getNbCandidat()];
         tabVoix2=getNbVoix();
                
@@ -106,7 +119,7 @@ public class ScrutinApprobation extends Scrutin {
         {
             tabResult2[i]=i+1;
         }
-                
+        
         int tabElecteur[]=new int[getNbElecteur()];
         for(int i=0;i<getNbElecteur();i++)
         {
@@ -137,7 +150,8 @@ public class ScrutinApprobation extends Scrutin {
         {
             tabCRep1[i]=getCandidat(i).getRepresentation(0);
         }
-                   
+        
+        
         double[] tabCRep2=new double[getNbCandidat()];
         for(int i=0;i<getNbCandidat();i++)
         {
@@ -179,7 +193,7 @@ public class ScrutinApprobation extends Scrutin {
 		FileWriter file = null;
 		try {
 			file = new FileWriter("RESULTAT VOTE APPROBATION.csv");
-            file.append("Résultat VOTE\n");
+                        file.append("Résultat VOTE\n");
 			for(int i = 0; i < value1.size(); i++) {
 				file.append(String.valueOf(value1.get(i)));
 				file.append(";");
@@ -229,6 +243,5 @@ public class ScrutinApprobation extends Scrutin {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-	}
-    
+	}    
 }

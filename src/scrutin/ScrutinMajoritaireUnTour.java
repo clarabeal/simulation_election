@@ -4,16 +4,30 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
+/**
+ * ScrutinMajoritaireUnTour est la classe qui hérite de la classe Scrutin
+ * Le système de scrutin majoritaire à un tour est que chaque électeur vote pour un seul candidat
+ * Le candidat qui a récolté le plus de voix est élu
+ */
 public class ScrutinMajoritaireUnTour extends Scrutin{
 
+    /**
+	 * Le construteur de la classe
+	 * @param nbE
+	 * 		Le nombre d'électeurs
+	 * @param nbC
+	 * 		Le nombre de candidats
+	 */
     public ScrutinMajoritaireUnTour(int nbE, int nbC){
         super(nbE,nbC);
     }
 
     /**
-    * @Override
+    * Remplit tabVote de chaque Electeur avec l'identifiant du Candidat pour lequel il souhaite voter
+    * @return Le nombre d'abstentions
     */
-    //Remplit tabVote de chaque Electeur avec l'identifiant du Candidat pour lequel il souhaite voter et retourne le nb d'abstention
+    @Override
     public int voter(){
         int nbAbstention=0;
         //On parcourt tabElecteur
@@ -46,6 +60,10 @@ public class ScrutinMajoritaireUnTour extends Scrutin{
         return nbAbstention;
     }
     
+
+    /**
+	 * Affichage du gagnant et du nombre de voix par candidat
+	 */  
     public void ToString(int abstention){
         System.out.println("");
         System.out.println("");
@@ -76,7 +94,7 @@ public class ScrutinMajoritaireUnTour extends Scrutin{
     }
     
     /**
-	 * Permet la création d'un fichier CSV.
+	 * Permet la création d'un fichier CSV
 	 */  
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void getCSV() {
@@ -89,11 +107,12 @@ public class ScrutinMajoritaireUnTour extends Scrutin{
         ArrayList value7 = new ArrayList();
         ArrayList value8 = new ArrayList();
 
-                
+        
         int tabVoix2[] = new int[getNbCandidat()];
         tabVoix2=getNbVoix();
                
-		int tabResult2[] = new int[getNbCandidat()];
+        int tabResult2[] = new int[getNbCandidat()];
+        
         for(int i = 0;i<getNbCandidat();i++)
         {
             tabResult2[i]=i+1;
@@ -214,11 +233,10 @@ public class ScrutinMajoritaireUnTour extends Scrutin{
             for(int i = 0; i < value8.size(); i++) {
 				file.append(String.valueOf(value8.get(i)));
 				file.append(";");
-			}
-                        
-        file.append("\n");
-        file.close();
-        
+			}           
+	
+            file.append("\n");
+            file.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

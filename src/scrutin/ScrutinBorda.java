@@ -3,16 +3,29 @@ package scrutin;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+/**
+ * ScrutinBorda est la classe qui hérite de la classe Scrutin
+ * Le système de méthode de Borda est que chaque électeur classe les candidats qu’il souhaite, le premier recoit n points, le deuxième
+ * n-1 et ainsi de suite. Le candidat qui a recu le plus de points est élu
+ */
 public class ScrutinBorda extends Scrutin{
 
+    /**
+	 * Le construteur de la classe
+	 * @param nbE
+	 * 		Le nombre d'électeurs
+	 * @param nbC
+	 * 		Le nombre de candidats
+	 */
     public ScrutinBorda(int nbE, int nbC){
         super(nbE,nbC);
     }
 
     /**
-    * @Override
+    * Remplit tabVote de chaque Electeur en attribuant n points pour le 1er Candidat, n-1 pour le 2ème...
+    * @return Le nombre d'abstentions
     */
-    //Remplit tabVote de chaque Electeur en attribuant n points pour le 1er Candidat, n-1 pour le 2ème... et retourne le nb d'abstention
+    @Override
     public int voter(){
         //On parcourt tabElecteur
         for(int i=0;i<getNbElecteur();i++){
@@ -55,8 +68,11 @@ public class ScrutinBorda extends Scrutin{
         return 0;
     }
 
-    //Redéfinition
-    //Fonction qui retourne un tab contenant le nombre de voix pour chaque Candidat(indice 0 => candidat 1, indice 1 => candidat 2 ...)
+    /** 
+     * Fonction qui retourne un tab contenant le nombre de voix pour chaque Candidat
+     * @return Tableau tabVoix contenant le nombre de voix pour chaque Candidat (indice 0 => candidat 1, indice 1 => candidat 2 ...)
+     */
+    @Override
     public int[] getNbVoix(){
 
         int tabVoix[] = new int[getNbCandidat()];
@@ -73,7 +89,9 @@ public class ScrutinBorda extends Scrutin{
         return tabVoix;
     }
     
-    
+    /**
+	 * Affichage du gagnant et du nombre de voix par candidat
+	 */  
     public void ToString(){
         System.out.println("");
         System.out.println("");
@@ -101,7 +119,7 @@ public class ScrutinBorda extends Scrutin{
     }
     
     /**
-	 * Permet la création d'un fichier CSV.
+	 * Permet la création d'un fichier CSV
 	 */  
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void getCSV() {
@@ -113,28 +131,30 @@ public class ScrutinBorda extends Scrutin{
         ArrayList value6 = new ArrayList();
         ArrayList value7 = new ArrayList();
         ArrayList value8 = new ArrayList();
-  
+                
         int tabVoix2[] = new int[getNbCandidat()];
         tabVoix2=getNbVoix();
                
-		int tabResult2[] = new int[getNbCandidat()];
+        int tabResult2[] = new int[getNbCandidat()];
+        
         for(int i = 0;i<getNbCandidat();i++)
         {
             tabResult2[i]=i+1;
         }
-                
+        
         int tabElecteur[]=new int[getNbElecteur()];
         for(int i=0;i<getNbElecteur();i++)
         {
             tabElecteur[i]=getElecteur(i).getIdElecteur();
         }
-                
+        
         double[] tabRep1=new double[getNbElecteur()];
         for(int i=0;i<getNbElecteur();i++)
         {
             tabRep1[i]=getElecteur(i).getRepresentation(0);
         }
-                    
+        
+        
         double[] tabRep2=new double[getNbElecteur()];
         for(int i=0;i<getNbElecteur();i++)
         {
@@ -152,6 +172,7 @@ public class ScrutinBorda extends Scrutin{
         {
             tabCRep1[i]=getCandidat(i).getRepresentation(0);
         }
+        
         
         double[] tabCRep2=new double[getNbCandidat()];
         for(int i=0;i<getNbCandidat();i++)
@@ -191,9 +212,6 @@ public class ScrutinBorda extends Scrutin{
 			value8.add(tabCRep2[i]);
 		}
                 
-                
-               
-
 		FileWriter file = null;
 		try {
 			file = new FileWriter("RESULTAT VOTE BORDA.csv");
@@ -239,8 +257,8 @@ public class ScrutinBorda extends Scrutin{
             for(int i = 0; i < value8.size(); i++) {
 				file.append(String.valueOf(value8.get(i)));
 				file.append(";");
-			}
-                        
+            }
+            
 			file.append("\n");
             file.close();
             
@@ -248,4 +266,5 @@ public class ScrutinBorda extends Scrutin{
 			e.printStackTrace();
 		}
 	}
+    
 }

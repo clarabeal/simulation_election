@@ -2,9 +2,11 @@ package scrutin;
 
 import java.util.Arrays;
 import java.util.Random;
-
 import personnes.*;
 
+/**
+ * Scrutin est la classe qui contient les éléments communs à tous les scrutins
+ */
 public abstract class Scrutin {
     private Electeur tabElecteur[];
     private Electeur tabElecteurSauvegarde[];
@@ -13,22 +15,27 @@ public abstract class Scrutin {
     private int nbElecteur;
     private int nbElecteurSauvegarde;
     private int nbCandidat;
-    private int nbCandidatSauvegarde;
 
     private double seuil;
 
+    /**
+	 * Le construteur de la classe
+	 * @param nbE
+	 * 		Le nombre d'électeurs
+	 * @param nbC
+	 * 		Le nombre de candidats
+	 */
     public Scrutin (int nbE, int nbC){
         this.nbElecteur=nbE;
         this.nbElecteurSauvegarde=nbE;
         this.nbCandidat=nbC;
-        this.nbCandidatSauvegarde=nbC;
         this.seuil=0.3;
 
         this.tabElecteur = new Electeur[this.nbElecteur];
         this.tabElecteurSauvegarde=new Electeur[this.nbElecteur];
         for(int i=0;i<this.nbElecteur;i++){
-			Electeur e = new Electeur(this.nbCandidat);
-			this.tabElecteur[i]=e;
+            Electeur e = new Electeur(this.nbCandidat);
+            this.tabElecteur[i]=e;
             this.tabElecteurSauvegarde[i]=e;
         }
 
@@ -41,32 +48,54 @@ public abstract class Scrutin {
         }
     }
        
-    //Fonction qui retourne nbElecteur
+    /**
+     * Fonction qui retourne nbElecteur
+     * @return Le nombre d'électeurs
+     */
     public int getNbElecteur(){
         return this.nbElecteur;
     }
 
-    //Fonction qui retourne nbCandidat
+    /** 
+     * Fonction qui retourne nbCandidat
+     * @return Le nombre de candidats
+     */
     public int getNbCandidat(){
         return this.nbCandidat;
     }
 
-    //Fonction qui retourne le seuil
+    /** 
+     * Fonction qui retourne le seuil
+     * @return Le seuil
+     */
     public double getSeuil(){
         return this.seuil;
     }
 
-    //Fonction qui retourne le Candidat présent à l'indice i de tabCandidat
+    /** 
+     * Fonction qui retourne le Candidat présent à l'indice i de tabCandidat
+     * @param i
+	 * 		L'indice de tabCandidat
+     * @return Le candidat
+     */
     public Candidat getCandidat(int i){
         return this.tabCandidat[i];
     }
 
-    //Fonction qui retourne l'Electeur présent à l'indice i de tabElecteur
+    /** 
+     * Fonction qui retourne l'Electeur présent à l'indice i de tabElecteur
+     * @param i
+	 * 		L'indice de tabElecteur
+     * @return L'électeur
+     */
     public Electeur getElecteur(int i){
         return this.tabElecteur[i];
     }
 
-    //Fonction qui retourne un tab contenant le nombre de voix pour chaque Candidat(indice 0 => candidat 1, indice 1 => candidat 2 ...)
+    /** 
+     * Fonction qui retourne un tab contenant le nombre de voix pour chaque Candidat
+     * @return Tableau tabVoix contenant le nombre de voix pour chaque Candidat (indice 0 => candidat 1, indice 1 => candidat 2 ...)
+     */
     public int[] getNbVoix(){
         int tabVoix[] = new int[this.nbCandidat];
         for(int i=0;i<this.nbCandidat;i++){
@@ -83,7 +112,10 @@ public abstract class Scrutin {
         return tabVoix;
     }
 
-    //Fonction qui retourne un tab du rang des indices de tabVoix
+    /** 
+     * Fonction qui retourne un tab du rang des indices de tabVoix
+     * @return Tableau tabRang du rang des indices de tabVoix
+     */
     public int[] getRangIndice(){
         int tabVoix[]=new int[this.nbCandidat];
         tabVoix=getNbVoix();
@@ -102,7 +134,10 @@ public abstract class Scrutin {
         return tabRang;
     }
 
-    //Fonction qui retourne un tab des résultats du scrutin
+    /** 
+     * Fonction qui retourne un tab des résultats du scrutin
+     * @return Tableau tabResult des résultats du scrutin
+     */
     public int[] getResultat(){
         int tabRang[]=new int[this.nbCandidat];
         tabRang=getRangIndice();
@@ -123,14 +158,24 @@ public abstract class Scrutin {
         return tabResult;
     }
 
-    //Créé un nouveau tabCandidat   
+    /** 
+     * Crée un nouveau tabCandidat
+     * @param newTabCandidat
+	 * 		Le tableau qui contient les nouvelles valeurs de tabCandidat
+     */
     public void setNewTabCandidat(Candidat[] newTabCandidat){
         this.nbCandidat = 2;
         this.tabCandidat[0]=newTabCandidat[0];
         this.tabCandidat[1]=newTabCandidat[1];
     }
 
-    //Créé un nouveau tabElecteur
+    /** 
+     * Crée un nouveau tabElecteur
+     * @param tabElecteurSondage
+     *      Le tableau qui contient les nouvelles valeurs de tabElecteur
+     * @param nbE
+	 * 		Le nombre d'électeurs du nouveau tableau
+     */
     public void setNewTabElecteur(Electeur[] tabElecteurSondage, int nbE){
         this.nbElecteur = nbE;
         for(int i=0;i<this.nbElecteur;i++){
@@ -138,12 +183,19 @@ public abstract class Scrutin {
         } 
     }
 
-    //Modifie le seuil
+    /** 
+     * Fixe le seuil a la valeur entrée en paramètre
+     * @param seuil
+	 * 		Le nouveau seuil
+     */
     public void setSeuil(double seuil){
         this.seuil=seuil;
     }
     
-    //Affiche les candidats avec leur representation et leur id 
+    
+    /** 
+     * Affiche les candidats avec leur representation et leur id 
+     */
     public void affTabCandidat(){
         for(int i=0;i<this.nbCandidat;i++){
             System.out.println("Id : Candidat "+this.tabCandidat[i].getIdCandidat());
@@ -152,7 +204,9 @@ public abstract class Scrutin {
         }
     }
 
-    //Affiche les électeurs avec leur représentation, leur id et leurs votes
+    /** 
+     * Affiche les électeurs avec leur représentation, leur id et leurs votes
+     */
     public void affTabElecteur(){
         for(int i=0;i<this.nbElecteur;i++){
             System.out.println("Id : Electeur "+this.tabElecteur[i].getIdElecteur());
@@ -163,10 +217,14 @@ public abstract class Scrutin {
         }
     }
 
-    //Procédure qui permet de remplir tabVote de chaque électeur et de retourner le nb d'abstention
+    /** 
+     * Procédure qui permet de remplir tabVote de chaque électeur et de retourner le nb d'abstention
+     */
     public abstract int voter();
 
-    //Modifie tabRang en enlevant les égalités en regardant l'âge
+    /** 
+     * Modifie tabRang en enlevant les égalités en regardant l'âge
+     */
     public void changeEgalite(int[] tabRang){
         for(int i=0;i<this.nbCandidat;i++){
             for(int j=0;j<this.nbCandidat;j++){
@@ -182,28 +240,38 @@ public abstract class Scrutin {
         }
     }
 
-    //Supprime le tabCandidat
+    /** 
+     * Supprime le tabCandidat
+     */
     public void deleteTabCandidat(){
         for(int i=0;i<getNbCandidat();i++)
         {
             this.tabCandidat[i]=null;
         }
     }
-
-    //Supprime le tabElecteur
+    
+    /** 
+     * Supprime le tabELecteur
+     */
     public void deleteTabElecteur(){
         for(int i=0;i<getNbElecteur();i++)
         {
             this.tabElecteur[i]=null;
         }
     }
-
-    //Retourne vrai si l'utilisateur a rentré des paramètres correctes, faux sinon
+    
+    
+    /** 
+     * Regarde s les paramètres entrés sont correctes
+     * @return Boolean qui indique si les paramètres sont correctes ou non
+     */
     public boolean bonsParametres() {
         return (getNbElecteur() == (int) getNbElecteur()) && (getNbCandidat() == (int) getNbCandidat()) && (getNbElecteur() >= 0) && (getNbCandidat() >= 0);
     }
 
-    //Modifie le tabElecteur pour le sondage
+    /** 
+     * Modifie le tabElecteur pour le sondage
+     */
     public void modifTabElecteurSondage(){
         int nbE =(int)Math.round(nbElecteur*0.15);
         
@@ -233,9 +301,7 @@ public abstract class Scrutin {
                         disponible=false;
                     }
                 }
-
             }
-
             //On remplit les tab
             tabIdElecteur[i]=idE;
             tabElecteurSondage[i]=getElecteur(idE-1); //-1 à cause du décalage dans tabElecteur
@@ -244,7 +310,10 @@ public abstract class Scrutin {
         setNewTabElecteur(tabElecteurSondage,nbE);
     }
     
-     public void interactions(){
+    /** 
+     * Modifie les représentations de chaque électeur en simulant une interaction socio-politique
+     */
+    public void interactions(){
         //On parcourt tabElecteur
         for(int i=0;i<this.nbElecteur;i++){
 
@@ -271,13 +340,13 @@ public abstract class Scrutin {
                         double dist=getElecteur(i).getRepresentation(j)-getElecteur(idElecteur-1).getRepresentation(j);
 
                         //On va venir rapprocher les représentations de l'électeur avec celles de l'autre électeur
-                        if(Math.abs(dist)>0.1&&dist<0){
-                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.1);
+                        if(Math.abs(dist)>0.01&&dist<0){
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.01);
                         }
-                        else if(Math.abs(dist)>0.1&&dist>0){
-                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.1);
+                        else if(Math.abs(dist)>0.01&&dist>0){
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.01);
                         }
-                        else{//La valeur absolue de la distance est <0,1 donc on copie la valeur de l'autre électeur
+                        else{//La valeur absolue de la distance est <0,01 donc on copie la valeur de l'autre électeur
                             getElecteur(i).setRepresentation(j, getElecteur(idElecteur-1).getRepresentation(j));
                         }
                     }
@@ -287,13 +356,13 @@ public abstract class Scrutin {
                         double dist=getElecteur(i).getRepresentation(j)-getElecteur(idElecteur-1).getRepresentation(j);
 
                         //On va venir éloigner les représentations de l'électeur avec celles de l'autre électeur
-                        if((dist<0) && (getElecteur(i).getRepresentation(j)-0.1>=0)){
-                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.1);
+                        if((dist<0) && (getElecteur(i).getRepresentation(j)-0.01>=0)){
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.01);
                         }
-                        else if((dist>0) && (getElecteur(i).getRepresentation(j)+0.1<=1)){
-                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.1);
+                        else if((dist>0) && (getElecteur(i).getRepresentation(j)+0.01<=1)){
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.01);
                         }
-                        //Si la nouvelle valeur allait être supérieure à 1 ou inférieure à 0 alors on ne change rien
+                        //Si la nouvelle valeur allait être supérieure à 1 ou inférieure à 0 on ne change rien
                     }
                 }
             }
@@ -314,13 +383,13 @@ public abstract class Scrutin {
                         double dist=getElecteur(i).getRepresentation(j)-getCandidat(idCandidat-1).getRepresentation(j);
 
                         //On va venir rapprocher les représentations de l'électeur avec celles du candidat
-                        if(Math.abs(dist)>0.1&&dist<0){
-                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.1);
+                        if(Math.abs(dist)>0.01&&dist<0){
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.01);
                         }
-                        else if(Math.abs(dist)>0.1&&dist>0){
-                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.1);
+                        else if(Math.abs(dist)>0.01&&dist>0){
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.01);
                         }
-                        else{//La valeur absolue de la distance est <0,1 donc on copie la valeur du candidat
+                        else{//La valeur absolue de la distance est <0,01 donc on copie la valeur du candidat
                             getElecteur(i).setRepresentation(j, getCandidat(idCandidat-1).getRepresentation(j));
                         }
                     }
@@ -331,46 +400,52 @@ public abstract class Scrutin {
                         double dist=getElecteur(i).getRepresentation(j)-getCandidat(idCandidat-1).getRepresentation(j);
 
                         //On va venir éloigner les représentations de l'électeur avec celles du candidat
-                        if((dist<0) && (getElecteur(i).getRepresentation(j)-0.1>=0)){
-                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.1);
+                        if((dist<0) && (getElecteur(i).getRepresentation(j)-0.01>=0)){
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.01);
                         }
-                        else if((dist>0) && (getElecteur(i).getRepresentation(j)+0.1<=1)){
-                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.1);
+                        else if((dist>0) && (getElecteur(i).getRepresentation(j)+0.01<=1)){
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.01);
                         }
-                        //Si la nouvelle valeur allait être supérieure à 1 ou inférieure à 0 alors on ne change rien
+                        //Si la nouvelle valeur allait être supérieure à 1 ou inférieure à 0 on ne change rien
                     }
                 }
             }
         }
     }
 
-    //Remet la toute première version de TabCandidat (utile pour afficher dans le CSV les candidats issus d'un scrutin majoritaire à 2 tours
+    /** 
+     * Remet la toute première version de TabCandidat 
+     * Utile pour afficher dans le CSV les candidats issus d'un scrutin majoritaire à 2 tours
+     */
     public void resetTabCandidat(){
         deleteTabCandidat();
-        this.nbCandidat=nbCandidatSauvegarde;
-        this.tabCandidat=tabCandidatSauvegarde;
+        this.nbCandidat=tabCandidatSauvegarde.length;
+        this.tabCandidat=tabCandidatSauvegarde;   
     }
      
-    //Remet la toute première version de TabCandidat (utile pour afficher dans le CSV les candidats issus d'un scrutin majoritaire à 2 tours
+    /** 
+     * Remet la toute première version de TabElecteur
+     * Utile pour afficher dans le CSV les candidats issus d'un scrutin majoritaire à 2 tours
+     */
     public void resetTabElecteur(){
         this.nbElecteur=nbElecteurSauvegarde;
         this.tabElecteur=tabElecteurSauvegarde;
     }
 
-    //Modifie les préférences des électeurs suite aux résultats du sondage
+    /** 
+     * Réalise le sondage préférence et modifie les représentations de chaque électeur à la suite des résultats du sondage
+     */
     public void calculSondage(){
         //On remplit tabResult
         int tabResult[] = new int[nbCandidat];
         tabResult=getResultat();
-
-        System.out.print("Résultats : ");
+        
+        System.out.print("Classement du sondage : ");
         for(int i=0;i<nbCandidat;i++){
             System.out.print(tabResult[i]+" ");
         }
-
         //On cherche les n premiers candidats
         int nbC = nbCandidat/2;
-        System.out.println("Nb de candidats : "+nbC);
 
         //On reprend tous les électeurs pour changer leurs préférences
         resetTabElecteur();
@@ -413,19 +488,29 @@ public abstract class Scrutin {
         }
     }
 
-    
+    /** 
+     * Réalise le sondage utilité et modifie les représentations de chaque électeur à la suite des résultats du sondage
+     * @param countVote
+	 * 		Le tableau qui contient le nombre de voix
+     */
     public void CalculSondageUtilite(int[] countVote){ 
-            
+         
+        int tabResult[] = new int[nbCandidat];
+        tabResult=getResultat();
+    
+        System.out.print("Classement du sondage : ");
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabResult[i]+" ");
+        }
         int[] nbVote = new int[getNbCandidat()];
         nbVote = countVote;
         double[] PercentVote=new double[nbVote.length];
-        int sommeVote=0;
+        double sommeVote=0;
         
         for(int i=0;i<getNbCandidat();i++)
         {
             sommeVote=sommeVote+nbVote[i];
         }
-
         for(int i=0;i<getNbCandidat();i++)
         {
             PercentVote[i]=nbVote[i]/sommeVote;
@@ -434,7 +519,7 @@ public abstract class Scrutin {
         for(int i=0;i<this.getNbElecteur();i++){
             int idCandidat=-1;
             double utiliteMin=1;
-        
+            
             //On parcourt tabCandidat pour chaque électeur
             for(int j=0;j<this.getNbCandidat();j++){
                 double SommeDistRep=0;
@@ -452,34 +537,48 @@ public abstract class Scrutin {
                 }
             }
             for(int j=0;j<2;j++){
-                double dist=getElecteur(i).getRepresentation(j)-getCandidat(idCandidat).getRepresentation(j);
-
-                //On va venir rapprocher les représentations de l'électeur avec celles du candidat
-                if(Math.abs(dist)>0.005&&dist<0){
-                    getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.005);
-                }
-                else if(Math.abs(dist)>0.005&&dist>0){
-                    getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.005);
-                }
-                else{//La valeur absolue de la distance est <0,05 donc on copie la valeur du candidat
-                    getElecteur(i).setRepresentation(j, getCandidat(idCandidat).getRepresentation(j));
-                }
-                if(getElecteur(i).getRepresentation(j)<0){
-                    getElecteur(i).setRepresentation(j,0);
-                }
-                else if(getElecteur(i).getRepresentation(j)>1){
-                    getElecteur(i).setRepresentation(j,1);
-                }
-            }
-        }       
+                        double dist=getElecteur(i).getRepresentation(j)-getCandidat(idCandidat).getRepresentation(j);
+                        
+                        //On va venir rapprocher les représentations de l'électeur avec celles du candidat
+                        if(Math.abs(dist)>0.01&&dist<0){
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)+0.01);
+                        }
+                        else if(Math.abs(dist)>0.01&&dist>0){
+                            getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-0.01);
+                        }
+                        else{//La valeur absolue de la distance est <0,01 donc on copie la valeur du candidat
+                            getElecteur(i).setRepresentation(j, getCandidat(idCandidat).getRepresentation(j));
+                        }
+                        if(getElecteur(i).getRepresentation(j)<0){
+                            getElecteur(i).setRepresentation(j,0);
+                        }
+                        else if(getElecteur(i).getRepresentation(j)>1){
+                            getElecteur(i).setRepresentation(j,1);
+                        }
+            }           
+        }
+            
     } 
      
+    /** 
+     * Réalise le sondage utilité proportion et modifie les représentations de chaque électeur à la suite des résultats du sondage
+     * @param countVote
+	 * 		Le tableau qui contient le nombre de voix
+     */
     public void CalculSondageUtilitePropor(int[] countVote){ 
             
+        int tabResult[] = new int[nbCandidat];
+        tabResult=getResultat();
+    
+        System.out.print("Classement du sondage : ");
+        for(int i=0;i<nbCandidat;i++){
+            System.out.print(tabResult[i]+" ");
+        }
+        
         int[] nbVote = new int[getNbCandidat()];
         nbVote = countVote;
         double[] PercentVote=new double[nbVote.length];
-        int sommeVote=0;
+        double sommeVote=0;
         
         for(int i=0;i<getNbCandidat();i++)
         {
@@ -520,7 +619,7 @@ public abstract class Scrutin {
                 else if(Math.abs(dist)>(0.01*utiliteMin)&&dist>0){
                     getElecteur(i).setRepresentation(j,getElecteur(i).getRepresentation(j)-(0.01*utiliteMin));
                 }
-                else{//La valeur absolue de la distance est <0,01 donc on copie la valeur du candidat
+                else{//La valeur absolue de la distance est <0,2*utiliteMin donc on copie la valeur du candidat
                     getElecteur(i).setRepresentation(j, getCandidat(idCandidat).getRepresentation(j));
                 }
                 if(getElecteur(i).getRepresentation(j)<0){
@@ -530,8 +629,7 @@ public abstract class Scrutin {
                     getElecteur(i).setRepresentation(j,1);
                 }
             }
-        }
-            
+        }      
     }
 }
 

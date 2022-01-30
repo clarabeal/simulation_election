@@ -1,14 +1,27 @@
 package scrutin;
 
-//import Affichage.AffichageHist;
+import Affichage.AffichageHist;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+/**
+ * ScrutinAlternatif est la classe qui hérite de la classe Scrutin
+ * Le système du vote alternatif est que chaque electeur classe l’ensemble des candidats. Celui qui a recu le moins de premier choix
+ * est éliminé et ses votes sont transférés aux candidats restants (via le 2ème choix des bulletins) et ainsi de
+ * suite jusqu’à ce qu’il ne reste qu’un seul candidat qui est élu
+ */
 public class ScrutinAlternatif extends Scrutin {
 
     private int tabRang[];
     private int CompteurTour=1;
 
+    /**
+	 * Le construteur de la classe
+	 * @param nbE
+	 * 		Le nombre d'électeurs
+	 * @param nbC
+	 * 		Le nombre de candidats
+	 */
     public ScrutinAlternatif(int nbE, int nbC){
         super(nbE,nbC);
     
@@ -19,9 +32,10 @@ public class ScrutinAlternatif extends Scrutin {
     }
 
     /**
-    * @Override
+    * Remplit tabVote de chaque Electeur en classant les Candidats
+    * @return Le nombre d'abstentions
     */
-    //Remplit tabVote de chaque Electeur en classant les Candidats
+    @Override
     public int voter(){
 
         //On parcourt tabElecteur
@@ -55,8 +69,11 @@ public class ScrutinAlternatif extends Scrutin {
         return 0;
     }
 
-    //Redéfinition
-    //Fonction qui retourne un tab contenant le nombre de fois qu'un Candidat a été placé 1er (indice 0 => candidat 1, indice 1 => candidat 2 ...)
+    /** 
+     * Fonction qui retourne un tab contenant le nombre de fois qu'un Candidat a été placé 1er
+     * @return Tableau tabVoix contenant le nombre de fois qu'un Candidat a été placé 1er (indice 0 => candidat 1, indice 1 => candidat 2 ...)
+     */
+    @Override
     public int[] getNbVoix(){
 
         int tabVoix[] = new int[getNbCandidat()];
@@ -75,7 +92,10 @@ public class ScrutinAlternatif extends Scrutin {
         return tabVoix;
     }
 
-    //Fonction qui retourne l'indice du Candidat qui a reçu le moins de 1er choix
+    /** 
+     * Fonction qui retourne l'indice du Candidat qui a reçu le moins de 1er choix
+     * @return idEliminé, l'identifiant du Candidat qui a été éliminé
+     */
     public int getIdElimine(){
         int tabVoix[] = new int[getNbCandidat()];
         tabVoix=getNbVoix();
@@ -89,7 +109,7 @@ public class ScrutinAlternatif extends Scrutin {
         }
         System.out.println(" ");
         String ChartName = "Histogramme du nombre de vote par candidat (VOTE ALTERNATIF TOUR "+CompteurTour+")";
-        //AffichageHist.createAndShowGuiName(tabVoix,ChartName);
+        AffichageHist.createAndShowGuiName(tabVoix,ChartName);
         CompteurTour=CompteurTour+1;
         int min=getNbElecteur(); //Il ne peut pas y avoir plus de voix que d'électeurs
         int idElimine=0;
@@ -104,7 +124,10 @@ public class ScrutinAlternatif extends Scrutin {
         return idElimine;
     }
 
-    //Fonction qui remplit tabVote de chaque Electeur en prenant en compte le Candidat éliminé
+    /** 
+     * Fonction qui remplit tabVote de chaque Electeur en prenant en compte le Candidat éliminé
+     * @return Le nombre d'abstentions
+     */
     public int voterElimine(){
 
         int compt=getNbCandidat();
@@ -119,9 +142,7 @@ public class ScrutinAlternatif extends Scrutin {
             if(compt!=1){
                 this.tabRang[compt-1]=(idElimine+1);
             }
-            
             compt--;
-
             for(int i=0;i<getNbElecteur();i++){
                 
                 //On modifie le classement des candidats qui se situent après l'idElimine
@@ -136,9 +157,7 @@ public class ScrutinAlternatif extends Scrutin {
                         getElecteur(i).setVote(l,0);
                     }
                 }
-            }
-
-            
+            }  
         }
 
         int tabVoix[] = new int[getNbCandidat()];
@@ -151,9 +170,10 @@ public class ScrutinAlternatif extends Scrutin {
             }
         }
         String ChartName = "Histogramme du nombre de vote par candidat (VOTE ALTERNATIF TOUR "+5+")";
-        //AffichageHist.createAndShowGuiName(tabVoix,ChartName);
+        AffichageHist.createAndShowGuiName(tabVoix,ChartName);
         //Affichage tabVoix
-        System.out.println("ELECTION TOUR 5");
+        System.out.print("");
+        System.out.println("ELECTION TOUR "+getNbCandidat());
         System.out.print("nbVoix : ");
         for(int i=0;i<getNbCandidat();i++){
             System.out.print(tabVoix[i]+" ");
@@ -166,17 +186,22 @@ public class ScrutinAlternatif extends Scrutin {
                     this.tabRang[0]=(i+1);
                 }
             }
-        }
-        
+        }  
         return 0;
     }
 
-    //Redéfinition
-    //Fonction qui retourne un tab des résultats du scrutin
+    /** 
+     * Fonction qui retourne un tab du rang des indices de tabVoix
+     * @return Tableau tabRang du rang des indices de tabVoix
+     */
+    @Override
     public int[] getRangIndice(){
         return this.tabRang;
     }
     
+    /**
+	 * Affichage du gagnant et du nombre de voix par candidat
+	 */  
     public void ToString(){
         System.out.println("");
         System.out.println("");
@@ -193,7 +218,7 @@ public class ScrutinAlternatif extends Scrutin {
     }
     
     /**
-	 * Permet la création d'un fichier CSV.
+	 * Permet la création d'un fichier CSV
 	 */  
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void getCSV() {
@@ -206,7 +231,7 @@ public class ScrutinAlternatif extends Scrutin {
         ArrayList value7 = new ArrayList();
         ArrayList value8 = new ArrayList();
 
-                
+        
         int tabVoix2[] = new int[getNbCandidat()];
         tabVoix2=getNbVoix();
                
@@ -253,9 +278,9 @@ public class ScrutinAlternatif extends Scrutin {
         {
             tabCRep2[i]=getCandidat(i).getRepresentation(1);
         }
-            
+                
         for(int i = 0; i < tabResult2.length; i++) {
-        value1.add("Candidat "+tabResult2[i]);
+			value1.add("Candidat "+tabResult2[i]);
 		}
                 
         for(int i = 0; i < tabVoix2.length; i++) {
@@ -286,6 +311,9 @@ public class ScrutinAlternatif extends Scrutin {
 			value8.add(tabCRep2[i]);
 		}
                 
+                
+               
+
 		FileWriter file = null;
 		try {
 			file = new FileWriter("RESULTAT VOTE ALTERNATIF.csv");
@@ -339,4 +367,6 @@ public class ScrutinAlternatif extends Scrutin {
 			e.printStackTrace();
 		}
 	}
+    
+    
 }

@@ -4,9 +4,22 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import personnes.*;
 
+/**
+ * ScrutinMajoritaireDeuxTours est la classe qui hérite de la classe ScrutinMajoritaireUnTour
+ * Le système de scrutin majoritaire à deux tours est que chaque électeur vote pour un seul candidat, les deux premiers candidats 
+ * peuvent accéder au second tour (qui correspond à un scrutin majoritaire à un tour)
+ */
 public class ScrutinMajoritaireDeuxTours extends ScrutinMajoritaireUnTour{
     
     private int tabIdCandidats[];
+
+    /**
+	 * Le construteur de la classe
+	 * @param nbE
+	 * 		Le nombre d'électeurs
+	 * @param nbC
+	 * 		Le nombre de candidats
+	 */
     public ScrutinMajoritaireDeuxTours(int nbE, int nbC) {
         super(nbE,nbC);
         this.tabIdCandidats = new int[2];
@@ -16,7 +29,11 @@ public class ScrutinMajoritaireDeuxTours extends ScrutinMajoritaireUnTour{
 
     }
 
-    //Fonction qui modifie le tabCandidat en prenant les 2 gagnants du 1er tour
+    /**
+    * Fonction qui modifie le tabCandidat en prenant les 2 gagnants du 1er tour
+    * @param tabResultat
+    *       Le tableau qui contient les résultats
+    */  
     public void modifTabCandidat(int[] tabResultat){
 
         Candidat[] tabCandidatTour2 = new Candidat[2];
@@ -32,7 +49,13 @@ public class ScrutinMajoritaireDeuxTours extends ScrutinMajoritaireUnTour{
         tabIdCandidats[1]=getCandidat(1).getIdCandidat();
     }
 
-    
+
+    /**
+	 * Affichage du gagnant et du nombre de voix par candidat du 1er tour
+     *  @param abstention
+	 * 		Le nombre d'abstention
+     *  @return tableau tabResult qui contient les résultats
+	 */  
     public int[] ToString1erTour(int abstention){
         System.out.println("");
         System.out.println("");
@@ -61,6 +84,11 @@ public class ScrutinMajoritaireDeuxTours extends ScrutinMajoritaireUnTour{
         
     }
 
+    /**
+	 * Affichage du gagnant et du nombre de voix par candidat du 2nd tour
+     *  @param abstention
+	 * 		Le nombre d'abstention
+	 */  
     public void ToString2eTour(int abstention){
         System.out.println("");
         System.out.println("Nombre de vote :");
@@ -89,6 +117,10 @@ public class ScrutinMajoritaireDeuxTours extends ScrutinMajoritaireUnTour{
     }
 
     
+    /** 
+     * Fonction qui retourne un tab des résultats du 2nd tour
+     * @return Tableau tabResult des résultats du scrutin
+     */
     public int[] getResultat2(){
         int tabRang[]=new int[getNbCandidat()];
         tabRang=getRangIndice();
@@ -109,6 +141,9 @@ public class ScrutinMajoritaireDeuxTours extends ScrutinMajoritaireUnTour{
     }
 
         
+    /**
+	 * Permet la création d'un fichier CSV
+	 */  
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	public void getCSV(int[] arrayVote) {
 		ArrayList value1 = new ArrayList();
@@ -145,8 +180,8 @@ public class ScrutinMajoritaireDeuxTours extends ScrutinMajoritaireUnTour{
         {
             tabRep1[i]=getElecteur(i).getRepresentation(0);
         }
-                
-                
+        
+        
         double[] tabRep2=new double[getNbElecteur()];
         for(int i=0;i<getNbElecteur();i++)
         {
@@ -166,13 +201,12 @@ public class ScrutinMajoritaireDeuxTours extends ScrutinMajoritaireUnTour{
             tabCRep1[i]=getCandidat(i).getRepresentation(0);
         }
         
-        
         double[] tabCRep2=new double[getNbCandidat()];
         for(int i=0;i<getNbCandidat();i++)
         {
             tabCRep2[i]=getCandidat(i).getRepresentation(1);
         }
-        
+               
 		for(int i = 0; i < tabResult2.length; i++) {
 			value1.add("Candidat "+tabResult2[i]);
 		}
@@ -278,8 +312,7 @@ public class ScrutinMajoritaireDeuxTours extends ScrutinMajoritaireUnTour{
 			}
                         
             file.append("\n");
-            file.close();
-            
+			file.close();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -1,4 +1,6 @@
-package affichage;
+
+
+package Affichage;
 
 import java.awt.Container;
 import java.awt.event.ItemListener;
