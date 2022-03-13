@@ -4,7 +4,17 @@ Projet réalisé par Hugo LIEVRE et Clara BEAL dans le cadre du Projet S5 d'Algo
 
 ## Présentation du projet
 
-Cette application permet de simuler une élection tout en choisissant le type de scrutin. Il est aussi possible d'effectuer des interactions et des sondages afin de faire évoluer les opinions des électeurs. Nous avons mis en place une interface graphique qui permet de saisir les différents paramètres et aussi d'afficher les résultats sous forme d'histogramme.
+Cette application permet de simuler une élection tout en choisissant le type de scrutin. Il est aussi possible d'effectuer des interactions et des sondages afin de faire évoluer les opinions des électeurs.
+
+## Fonctionnalités 
+
+- Initialisation d'un certain nombre d’électeurs et de candidats à des valeurs aléatoires
+
+- Simulation d'une élection et affichage du résultat
+
+- Réalisation d'un sondage d'opinion (i.e. le résultat d'une élection en prenant aléatoirement un sous-ensemble d'électeurs) et affichage du résultat
+
+- Pouvoir faire évoluer les opinions des électeurs préalablement à l'élection et afficher l'évolution des opinions 
 
 ## Différents types de scrutin
 
@@ -22,11 +32,11 @@ Cette application permet de simuler une élection tout en choisissant le type de
 
 - Interactions socio-politiques
 
-- Sondage basé sur les préférences
+- Sondage basé sur les préférences avec un déplacement vers le candidat le plus proche de ses préférences
 
-- Sondage basé sur l'utilité 
+- Sondage basé sur l'utilité (multiplication de sa préférence par son pourcentage de voix dans le sondage) avec un déplacement vers le candidat ayant l'utilité la plus élevée
 
-- Sondage basé sur l'utilité (Proportion)
+- Sondage basé sur l'utilité avec un déplacement vers chaque candidat de manière proportionnelle à son utilité
 
 ## Extensions
 
